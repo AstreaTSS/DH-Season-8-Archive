@@ -1,0 +1,2182 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Danganronpa: Despair&#39;s Horizon - 〖&#128081;〗aaron-ovengue</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+
+    <style>
+        @font-face {
+            font-family: Whitney;
+            src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-300.woff);
+            font-weight: 300;
+        }
+
+        @font-face {
+            font-family: Whitney;
+            src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-400.woff);
+            font-weight: 400;
+        }
+
+        @font-face {
+            font-family: Whitney;
+            src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-500.woff);
+            font-weight: 500;
+        }
+
+        @font-face {
+            font-family: Whitney;
+            src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-600.woff);
+            font-weight: 600;
+        }
+
+        @font-face {
+            font-family: Whitney;
+            src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-700.woff);
+            font-weight: 700;
+        }
+
+        body {
+            background-color: #36393e;
+            color: #dcddde;
+            font-family: "Whitney", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 17px;
+            font-weight: 400;
+        }
+
+        a {
+            color: #00aff4;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        img {
+            object-fit: contain;
+        }
+
+        .markdown {
+            max-width: 100%;
+            line-height: 1.3;
+            overflow-wrap: break-word;
+        }
+
+        .preserve-whitespace {
+            white-space: pre-wrap;
+        }
+
+        .spoiler-text {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+        }
+
+        .spoiler-text--hidden {
+            cursor: pointer;
+            background-color: #202225;
+            color: rgba(0, 0, 0, 0);
+        }
+
+        .spoiler-text--hidden:hover {
+            background-color: rgba(32, 34, 37, 0.8);
+        }
+
+        .spoiler-text--hidden::selection {
+            color: rgba(0, 0, 0, 0);
+        }
+
+        .quote {
+            display: flex;
+            margin: 0.05em 0;
+        }
+
+        .quote::before {
+            content: "";
+            margin-right: 0.5em;
+            border: 2px solid #4f545c;
+            border-radius: 3px;
+        }
+
+        .pre {
+            background-color: #2f3136;
+            font-family: "Consolas", "Courier New", Courier, monospace;
+        }
+
+        .pre--multiline {
+            margin-top: 0.25em;
+            padding: 0.5em;
+            border: 2px solid #282b30;
+            border-radius: 5px;
+            color: #b9bbbe;
+        }
+
+        .pre--multiline.hljs {
+            background-color: #2f3136;
+            color: #b9bbbe;
+        }
+
+        .pre--inline {
+            padding: 2px;
+            border-radius: 3px;
+            font-size: 0.85em;
+        }
+
+        .mention {
+            border-radius: 3px;
+            padding: 0 2px;
+            color: #7289da;
+            background-color: rgba(114, 137, 218, .1);
+            font-weight: 500;
+        }
+
+        .timestamp {
+            border-radius: 3px;
+            padding: 0 2px;
+            background-color: rgba(255, 255, 255, 0.06);
+        }
+
+        .emoji {
+            width: 1.325em;
+            height: 1.325em;
+            margin: 0 0.06em;
+            vertical-align: -0.4em;
+        }
+
+        .emoji--small {
+            width: 1em;
+            height: 1em;
+        }
+
+        .emoji--large {
+            width: 2.8em;
+            height: 2.8em;
+        }
+
+        .preamble {
+            display: grid;
+            margin: 0 0.3em 0.6em 0.3em;
+            max-width: 100%;
+            grid-template-columns: auto 1fr;
+        }
+
+        .preamble__guild-icon-container {
+            grid-column: 1;
+        }
+
+        .preamble__guild-icon {
+            max-width: 88px;
+            max-height: 88px;
+        }
+
+        .preamble__entries-container {
+            grid-column: 2;
+            margin-left: 0.6em;
+        }
+
+        .preamble__entry {
+            font-size: 1.4em;
+            color: #ffffff;
+        }
+
+        .preamble__entry--small {
+            font-size: 1em;
+        }
+
+        .chatlog {
+            max-width: 100%;
+        }
+
+        .chatlog__message-group {
+            display: grid;
+            margin: 0 0.6em;
+            padding: 0.9em 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            grid-template-columns: auto 1fr;
+        }
+
+        .chatlog__reference-symbol {
+            grid-column: 1;
+            margin: 8px 4px 4px 18px;
+            border-left: 2px solid #4f545c;
+            border-top: 2px solid #4f545c;
+            border-radius: 8px 0 0 0;
+        }
+
+        .chatlog__reference {
+            display: flex;
+            grid-column: 2;
+            margin-bottom: 0.25em;
+            font-size: 0.875em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            align-items: center;
+            color: #b5b6b8;
+        }
+
+        .chatlog__reference-avatar {
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            margin-right: 0.25em;
+        }
+
+        .chatlog__reference-name {
+            margin-right: 0.3em;
+            font-weight: 600;
+        }
+
+        .chatlog__reference-content {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .chatlog__reference-content a:hover {
+            text-decoration: none;
+        }
+
+        .chatlog__reference-link {
+            cursor: pointer;
+            color: #b5b6b8;
+        }
+
+        .chatlog__reference-link * {
+            display: inline;
+            pointer-events: none;
+        }
+
+        .chatlog__reference-link:hover {
+            color: #ffffff;
+        }
+
+        .chatlog__reference-link:hover *:not(.spoiler-text) {
+            color: #ffffff;
+        }
+
+        .chatlog__reference-edited-timestamp {
+            margin-left: 0.25em;
+            font-size: 0.8em;
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        .chatlog__author-avatar-container {
+            grid-column: 1;
+            width: 40px;
+            height: 40px;
+            margin-right: 16px;
+        }
+
+        .chatlog__author-avatar {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+        }
+
+        .chatlog__messages {
+            grid-column: 2;
+            min-width: 50%;
+        }
+
+        .chatlog__author-name {
+            font-weight: 500;
+            color: #ffffff;
+        }
+
+        .chatlog__timestamp {
+            margin-left: 0.3em;
+            font-size: 0.75em;
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        .chatlog__message {
+            padding: 0.1em 0.3em;
+            margin: 0 -0.3em;
+            background-color: transparent;
+            transition: background-color 1s ease;
+        }
+
+        .chatlog__message--highlighted {
+            background-color: rgba(114, 137, 218, 0.2);
+        }
+
+        .chatlog__message--pinned {
+            background-color: rgba(249, 168, 37, 0.05);
+        }
+
+        .chatlog__content {
+            font-size: 0.95em;
+            word-wrap: break-word;
+        }
+
+        .chatlog__edited-timestamp {
+            margin-left: 0.15em;
+            font-size: 0.8em;
+        }
+
+        .chatlog__attachment {
+            display: inline-block;
+            position: relative;
+            margin-top: 0.3em;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .chatlog__attachment--hidden {
+            cursor: pointer;
+            box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
+        }
+
+        .chatlog__attachment--hidden * {
+            pointer-events: none;
+        }
+
+        .chatlog__attachment-spoiler-caption {
+            display: none;
+            z-index: 999;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            padding: 0.4em 0.8em;
+            background-color: rgba(0, 0, 0, 0.9);
+            border-radius: 20px;
+            color: #dcddde;
+            font-size: 0.9em;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+
+        .chatlog__attachment--hidden .chatlog__attachment-spoiler-caption {
+            display: block;
+        }
+
+        .chatlog__attachment--hidden:hover .chatlog__attachment-spoiler-caption {
+            color: #fff;
+        }
+
+        .chatlog__attachment-media {
+            vertical-align: top;
+            max-width: 45vw;
+            max-height: 500px;
+            border-radius: 3px;
+        }
+
+        .chatlog__attachment--hidden .chatlog__attachment-media {
+            filter: blur(44px);
+        }
+
+        .chatlog__attachment-generic {
+            width: 100%;
+            max-width: 520px;
+            height: 40px;
+            padding: 10px;
+            background-color: #2f3136;
+            border: 1px solid #292b2f;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .chatlog__attachment--hidden .chatlog__attachment-generic {
+            filter: blur(44px);
+        }
+
+        .chatlog__attachment-generic-icon {
+            float: left;
+            width: 30px;
+            height: 100%;
+            margin-right: 10px;
+        }
+
+        .chatlog__attachment-generic-size {
+            color: #72767d;
+            font-size: 12px;
+        }
+
+        .chatlog__attachment-generic-name {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .chatlog__edited-timestamp {
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        .chatlog__embed {
+            display: flex;
+            margin-top: 0.3em;
+            max-width: 520px;
+        }
+
+        .chatlog__embed-color-pill {
+            flex-shrink: 0;
+            width: 0.25em;
+            border-top-left-radius: 3px;
+            border-bottom-left-radius: 3px;
+        }
+
+        .chatlog__embed-color-pill--default {
+            background-color: #202225;
+        }
+
+        .chatlog__embed-content-container {
+            display: flex;
+            flex-direction: column;
+            padding: 0.5em 0.6em;
+            background-color: rgba(46, 48, 54, 0.3);
+            border: 1px solid rgba(46, 48, 54, 0.6);
+            border-top-right-radius: 3px;
+            border-bottom-right-radius: 3px;
+        }
+
+        .chatlog__embed-content {
+            display: flex;
+            width: 100%;
+        }
+
+        .chatlog__embed-text {
+            flex: 1;
+        }
+
+        .chatlog__embed-author {
+            display: flex;
+            margin-bottom: 0.3em;
+            align-items: center;
+        }
+
+        .chatlog__embed-author-icon {
+            margin-right: 0.5em;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+
+        .chatlog__embed-author-name {
+            font-size: 0.875em;
+            font-weight: 600;
+            color: #ffffff
+        }
+
+        .chatlog__embed-author-name-link {
+            color: #ffffff;
+        }
+
+        .chatlog__embed-title {
+            margin-bottom: 0.2em;
+            font-size: 0.875em;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .chatlog__embed-description {
+            font-weight: 500;
+            font-size: 0.85em;
+            color: #dcddde;
+        }
+
+        .chatlog__embed-fields {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0 0.5em;
+        }
+
+        .chatlog__embed-field {
+            flex: 0;
+            min-width: 100%;
+            max-width: 506px;
+            padding-top: 0.6em;
+            font-size: 0.875em;
+        }
+
+        .chatlog__embed-field--inline {
+            flex: 1;
+            flex-basis: auto;
+            min-width: 150px;
+        }
+
+        .chatlog__embed-field-name {
+            margin-bottom: 0.2em;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .chatlog__embed-field-value {
+            font-weight: 500;
+            color: #dcddde;
+        }
+
+        .chatlog__embed-thumbnail {
+            flex: 0;
+            margin-left: 1.2em;
+            max-width: 80px;
+            max-height: 80px;
+            border-radius: 3px;
+        }
+
+        .chatlog__embed-image-container {
+            margin-top: 0.6em;
+        }
+
+        .chatlog__embed-image {
+            max-width: 500px;
+            max-height: 400px;
+            border-radius: 3px;
+        }
+
+        .chatlog__embed-footer {
+            margin-top: 0.6em;
+            color: #dcddde;
+        }
+
+        .chatlog__embed-footer-icon {
+            margin-right: 0.2em;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            vertical-align: middle;
+        }
+
+        .chatlog__embed-footer-text {
+            vertical-align: middle;
+            font-size: 0.75em;
+            font-weight: 500;
+        }
+
+        .chatlog__embed-plainimage {
+            vertical-align: top;
+            max-width: 45vw;
+            max-height: 500px;
+            border-radius: 3px;
+        }
+
+        .chatlog__embed-spotify {
+            border: 0;
+        }
+
+        .chatlog__embed-youtube-container {
+            margin-top: 0.6em;
+        }
+
+        .chatlog__embed-youtube {
+            border: 0;
+            border-radius: 3px;
+        }
+
+        .chatlog__reactions {
+            display: flex;
+        }
+
+        .chatlog__reaction {
+            display: flex;
+            align-items: center;
+            margin: 0.35em 0.1em 0.1em 0.1em;
+            padding: 0.2em 0.35em;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 3px;
+        }
+
+        .chatlog__reaction-count {
+            min-width: 9px;
+            margin-left: 0.35em;
+            font-size: 0.875em;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .chatlog__bot-tag {
+            position: relative;
+            top: -.1em;
+            margin-left: 0.3em;
+            padding: 0.05em 0.3em;
+            border-radius: 3px;
+            line-height: 1.3;
+            background-color: #5865F2;
+            color: #ffffff;
+            font-size: 0.625em;
+            font-weight: 500;
+        }
+
+        .postamble {
+            margin: 1.4em 0.3em 0.6em 0.3em;
+            padding: 1em;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .postamble__entry {
+            color: #ffffff;
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/solarized-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.pre--multiline').forEach(block => hljs.highlightBlock(block));
+        });
+    </script>
+
+    <script>
+        function scrollToMessage(event, id) {
+            var element = document.getElementById('message-' + id);
+
+            if (element) {
+                event.preventDefault();
+
+                element.classList.add('chatlog__message--highlighted');
+
+                window.scrollTo({
+                    top: element.getBoundingClientRect().top - document.body.getBoundingClientRect().top - (window.innerHeight / 2),
+                    behavior: 'smooth'
+                });
+
+                window.setTimeout(function() {
+                    element.classList.remove('chatlog__message--highlighted');
+                }, 2000);
+            }
+        }
+
+        function showSpoiler(event, element) {
+            if (element && element.classList.contains('spoiler-text--hidden')) {
+                event.preventDefault();
+                element.classList.remove('spoiler-text--hidden');
+            }
+            if (element && element.classList.contains('chatlog__attachment--hidden')) {
+                event.preventDefault();
+                element.classList.remove('chatlog__attachment--hidden');
+            }
+        }
+    </script>
+
+    <svg style="display: none">
+        <symbol id="icon-attachment" viewBox="0 0 720 960">
+            <path fill="#f4f5fb" d="M50,935a25,25,0,0,1-25-25V50A25,25,0,0,1,50,25H519.6L695,201.32V910a25,25,0,0,1-25,25Z" />
+            <path fill="#7789c4" d="M509.21,50,670,211.63V910H50V50H509.21M530,0H50A50,50,0,0,0,0,50V910a50,50,0,0,0,50,50H670a50,50,0,0,0,50-50h0V191Z" />
+            <path fill="#f4f5fb" d="M530,215a25,25,0,0,1-25-25V50a25,25,0,0,1,16.23-23.41L693.41,198.77A25,25,0,0,1,670,215Z" />
+            <path fill="#7789c4" d="M530,70.71,649.29,190H530V70.71M530,0a50,50,0,0,0-50,50V190a50,50,0,0,0,50,50H670a50,50,0,0,0,50-50Z" />
+        </symbol>
+    </svg>
+</head>
+<body>
+
+<div class="preamble">
+    <div class="preamble__guild-icon-container">
+        <img class="preamble__guild-icon" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20%E3%80%96%F0%9F%91%91%E3%80%97aaron-ovengue%20%5B855570423307173968%5D.html_Files/a_2f7c80d0e7b055c4cf7f616eb37ae513-2180D.png" alt="Guild icon" loading="lazy">
+    </div>
+    <div class="preamble__entries-container">
+        <div class="preamble__entry">Danganronpa: Despair&#39;s Horizon</div>
+        <div class="preamble__entry">•❅─✧❅Dorms (KG)❅✧─❅• / 〖&#128081;〗aaron-ovengue</div>
+
+
+    </div>
+</div>
+
+<div class="chatlog">
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20%E3%80%96%F0%9F%91%91%E3%80%97aaron-ovengue%20%5B855570423307173968%5D.html_Files/1695350fa348813e1c2b1694b0971eb2-6D88A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="ImReallyScrewed#8206" data-user-id="578326021443420160" style="color: rgb(211,36,36)">Brilliance is fleeting.</span>
+
+
+        <span class="chatlog__timestamp">18-Jun-21 06:46 PM</span>
+
+            <div class="chatlog__message chatlog__message--pinned" data-message-id="855579325142925324" id="message-855579325142925324" title="Message sent: 18-Jun-21 06:46 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>It&#39;s Aaron Ovengue, the Ultimate Gang Leader&#39;s dorm. A nameplate on the front of the door clearly marks so. If it&#39;s not your dorm, you probably won&#39;t be able to get in because of the handbook scanner. You&#39;ll need the correct person&#39;s Monopad to be able to open the door.</em>
+
+<em>Once you walk in, a blast of warm air hits you. It seems the room&#39;s heat is running at all times, and a thermostat near the door can regulate this. The room seems rather nice, with accommodations being laid out for you. However, it seems like there isn&#39;t a bathroom, so you&#39;ll need to go to the actual resort to do that.</em>
+
+<em>First things first, the bed. It&#39;s a twin sized bed, enough to fit one person unless they&#39;re really big. There are spare sheets still in their packaging under the bed, and 2 pillows are on the bed itself. This is where you&#39;ll probably be sleeping for most of your nights. Beside the bed is a nightstand with a lamp on it.</em>
+
+<em>Next, there&#39;s a desk opposite the bed in the room. The desk is supplied with basic office goods, like paper and pens. You&#39;ll be able to write whatever you want here, and work on whatever you want. There&#39;s a trash can beside the desk as well. A desk lamp sits on top.</em>
+
+<em>Finally, the wardrobe. This contains whatever your OC is wearing in their image in <span class="mention">#〖&#128100;〗character-info</span>. However, there is another curious item in here. A large and puffy jacket, fitted to your OC is in the wardrobe. It&#39;s gray, with no logos or designs on it. It seems you&#39;re to wear this whenever you head outside. One last thing. On the desk of the room sits a little badge for your jacket. It&#39;s a badge of Monokuma&#39;s face on it. It&#39;s up to you if you want to put it on your jacket or not.</em></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20%E3%80%96%F0%9F%91%91%E3%80%97aaron-ovengue%20%5B855570423307173968%5D.html_Files/1695350fa348813e1c2b1694b0971eb2-6D88A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="ImReallyScrewed#8206" data-user-id="578326021443420160" style="color: rgb(211,36,36)">Brilliance is fleeting.</span>
+
+
+        <span class="chatlog__timestamp">19-Jun-21 12:25 PM</span>
+
+            <div class="chatlog__message chatlog__message--pinned" data-message-id="855845787565162526" id="message-855845787565162526" title="Message sent: 19-Jun-21 12:25 PM">
+
+                    <div class="chatlog__attachment " onclick="">
+
+                            <a href="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20%E3%80%96%F0%9F%91%91%E3%80%97aaron-ovengue%20%5B855570423307173968%5D.html_Files/le-melezin-france-113E4.png">
+                                <img class="chatlog__attachment-media" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20%E3%80%96%F0%9F%91%91%E3%80%97aaron-ovengue%20%5B855570423307173968%5D.html_Files/le-melezin-france-113E4.png" alt="Image attachment" title="Image: le-melezin-france.png (1.15 MB)" loading="lazy">
+                            </a>
+                    </div>
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20%E3%80%96%F0%9F%91%91%E3%80%97aaron-ovengue%20%5B855570423307173968%5D.html_Files/1695350fa348813e1c2b1694b0971eb2-6D88A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="ImReallyScrewed#8206" data-user-id="578326021443420160" style="color: rgb(211,36,36)">Brilliance is fleeting.</span>
+
+
+        <span class="chatlog__timestamp">27-Jun-21 06:48 PM</span>
+
+            <div class="chatlog__message " data-message-id="858841175359356928" id="message-858841175359356928" title="Message sent: 27-Jun-21 06:48 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="quote">In this room, Aaron has a little golden ring and a model gun. It looks realistic, but it&#39;s not real.</div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20%E3%80%96%F0%9F%91%91%E3%80%97aaron-ovengue%20%5B855570423307173968%5D.html_Files/fdb8ac32369fb09cc040f18c6746eabb-72BB3.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Aaron#0000" data-user-id="860595037217226792" style="">Aaron</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">02-Jul-21 02:57 PM</span>
+
+            <div class="chatlog__message " data-message-id="860595038332125194" id="message-860595038332125194" title="Message sent: 02-Jul-21 02:57 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>So man here. He has strange feelings. So he&#39;s off</em></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20%E3%80%96%F0%9F%91%91%E3%80%97aaron-ovengue%20%5B855570423307173968%5D.html_Files/c5b5070ed3847e865c89156a9cc0cdb5-4D2DA.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="4MushroomSoap#1474" data-user-id="673944515417079847" style="">4MushroomSoap</span>
+
+
+        <span class="chatlog__timestamp">10-Jul-21 03:33 PM</span>
+
+            <div class="chatlog__message " data-message-id="863503095626727485" id="message-863503095626727485" title="Message sent: 10-Jul-21 03:33 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">=remindme 30mins <strong>Let&#39;s do the first Aaron Monologue~</strong></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20%E3%80%96%F0%9F%91%91%E3%80%97aaron-ovengue%20%5B855570423307173968%5D.html_Files/2fa57b425415134d4f8b279174131ad6-98D95.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="YAGPDB.xyz#8760" data-user-id="204255221017214977" style="color: rgb(255,94,0)">YAGPDB.xyz</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">10-Jul-21 03:33 PM</span>
+
+            <div class="chatlog__message " data-message-id="863503096580014110" id="message-863503096580014110" title="Message sent: 10-Jul-21 03:33 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Set a reminder in 30 minutes from now (10 Jul 21 20:03 UTC)
+View reminders with the reminders command</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20%E3%80%96%F0%9F%91%91%E3%80%97aaron-ovengue%20%5B855570423307173968%5D.html_Files/2fa57b425415134d4f8b279174131ad6-98D95.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="YAGPDB.xyz#8760" data-user-id="204255221017214977" style="color: rgb(255,94,0)">YAGPDB.xyz</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">10-Jul-21 04:03 PM</span>
+
+            <div class="chatlog__message " data-message-id="863510658271281192" id="message-863510658271281192" title="Message sent: 10-Jul-21 04:03 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><strong>Reminder</strong> <span class="mention" title="4MushroomSoap#1474">@4MushroomSoap</span>: <strong>Let&#39;s do the first Aaron Monologue~</strong></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20%E3%80%96%F0%9F%91%91%E3%80%97aaron-ovengue%20%5B855570423307173968%5D.html_Files/c5b5070ed3847e865c89156a9cc0cdb5-4D2DA.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="4MushroomSoap#1474" data-user-id="673944515417079847" style="">4MushroomSoap</span>
+
+
+        <span class="chatlog__timestamp">10-Jul-21 04:08 PM</span>
+
+            <div class="chatlog__message " data-message-id="863511901480419358" id="message-863511901480419358" title="Message sent: 10-Jul-21 04:08 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(b-but-</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="863511921566023690" id="message-863511921566023690" title="Message sent: 10-Jul-21 04:08 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(ok soon</span>
+
+                        </div>
+                    </div>
+
+
+
+                    <div class="chatlog__reactions">
+                            <div class="chatlog__reaction" title="Fukt">
+                                <img class="emoji emoji--small" alt="Fukt" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20%E3%80%96%F0%9F%91%91%E3%80%97aaron-ovengue%20%5B855570423307173968%5D.html_Files/755497698563457024-D9F52.png" loading="lazy">
+                                <span class="chatlog__reaction-count">2</span>
+                            </div>
+                    </div>
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20%E3%80%96%F0%9F%91%91%E3%80%97aaron-ovengue%20%5B855570423307173968%5D.html_Files/c5b5070ed3847e865c89156a9cc0cdb5-4D2DA.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="4MushroomSoap#1474" data-user-id="673944515417079847" style="">4MushroomSoap</span>
+
+
+        <span class="chatlog__timestamp">10-Jul-21 06:53 PM</span>
+
+            <div class="chatlog__message " data-message-id="863553550637989919" id="message-863553550637989919" title="Message sent: 10-Jul-21 06:53 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">=remindme 7hrs <em>ok do it now-</em></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20%E3%80%96%F0%9F%91%91%E3%80%97aaron-ovengue%20%5B855570423307173968%5D.html_Files/2fa57b425415134d4f8b279174131ad6-98D95.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="YAGPDB.xyz#8760" data-user-id="204255221017214977" style="color: rgb(255,94,0)">YAGPDB.xyz</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">10-Jul-21 06:53 PM</span>
+
+            <div class="chatlog__message " data-message-id="863553551603466250" id="message-863553551603466250" title="Message sent: 10-Jul-21 06:53 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Set a reminder in 7 hours from now (11 Jul 21 05:53 UTC)
+View reminders with the reminders command</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20%E3%80%96%F0%9F%91%91%E3%80%97aaron-ovengue%20%5B855570423307173968%5D.html_Files/2fa57b425415134d4f8b279174131ad6-98D95.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="YAGPDB.xyz#8760" data-user-id="204255221017214977" style="color: rgb(255,94,0)">YAGPDB.xyz</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">11-Jul-21 01:53 AM</span>
+
+            <div class="chatlog__message " data-message-id="863659270368002048" id="message-863659270368002048" title="Message sent: 11-Jul-21 01:53 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><strong>Reminder</strong> <span class="mention" title="4MushroomSoap#1474">@4MushroomSoap</span>: <em>ok do it now-</em></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20%E3%80%96%F0%9F%91%91%E3%80%97aaron-ovengue%20%5B855570423307173968%5D.html_Files/c5b5070ed3847e865c89156a9cc0cdb5-4D2DA.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="4MushroomSoap#1474" data-user-id="673944515417079847" style="">4MushroomSoap</span>
+
+
+        <span class="chatlog__timestamp">11-Jul-21 05:20 AM</span>
+
+            <div class="chatlog__message " data-message-id="863711383118938132" id="message-863711383118938132" title="Message sent: 11-Jul-21 05:20 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(ok. I&#39;ll start after I eat breakfast</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20%E3%80%96%F0%9F%91%91%E3%80%97aaron-ovengue%20%5B855570423307173968%5D.html_Files/c5b5070ed3847e865c89156a9cc0cdb5-4D2DA.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="4MushroomSoap#1474" data-user-id="673944515417079847" style="">4MushroomSoap</span>
+
+
+        <span class="chatlog__timestamp">11-Jul-21 11:39 AM</span>
+
+            <div class="chatlog__message " data-message-id="863806669317210172" id="message-863806669317210172" title="Message sent: 11-Jul-21 11:39 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(Ok I didnt do it--</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="863806760623538186" id="message-863806760623538186" title="Message sent: 11-Jul-21 11:39 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">=remindme 1hr I hope you&#39;ve started it just eat first</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20%E3%80%96%F0%9F%91%91%E3%80%97aaron-ovengue%20%5B855570423307173968%5D.html_Files/2fa57b425415134d4f8b279174131ad6-98D95.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="YAGPDB.xyz#8760" data-user-id="204255221017214977" style="color: rgb(255,94,0)">YAGPDB.xyz</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">11-Jul-21 11:39 AM</span>
+
+            <div class="chatlog__message " data-message-id="863806761269592085" id="message-863806761269592085" title="Message sent: 11-Jul-21 11:39 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Set a reminder in 1 hour from now (11 Jul 21 16:39 UTC)
+View reminders with the reminders command</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20%E3%80%96%F0%9F%91%91%E3%80%97aaron-ovengue%20%5B855570423307173968%5D.html_Files/2fa57b425415134d4f8b279174131ad6-98D95.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="YAGPDB.xyz#8760" data-user-id="204255221017214977" style="color: rgb(255,94,0)">YAGPDB.xyz</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">11-Jul-21 12:39 PM</span>
+
+            <div class="chatlog__message " data-message-id="863821883845509150" id="message-863821883845509150" title="Message sent: 11-Jul-21 12:39 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><strong>Reminder</strong> <span class="mention" title="4MushroomSoap#1474">@4MushroomSoap</span>: I hope you&#39;ve started it just eat first</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20%E3%80%96%F0%9F%91%91%E3%80%97aaron-ovengue%20%5B855570423307173968%5D.html_Files/c5b5070ed3847e865c89156a9cc0cdb5-4D2DA.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="4MushroomSoap#1474" data-user-id="673944515417079847" style="">4MushroomSoap</span>
+
+
+        <span class="chatlog__timestamp">11-Jul-21 01:46 PM</span>
+
+            <div class="chatlog__message " data-message-id="863838593926955038" id="message-863838593926955038" title="Message sent: 11-Jul-21 01:46 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(cool shall get started yag ❤️</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20%E3%80%96%F0%9F%91%91%E3%80%97aaron-ovengue%20%5B855570423307173968%5D.html_Files/c5b5070ed3847e865c89156a9cc0cdb5-4D2DA.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="4MushroomSoap#1474" data-user-id="673944515417079847" style="">4MushroomSoap</span>
+
+
+        <span class="chatlog__timestamp">24-Jul-21 03:04 PM</span>
+
+            <div class="chatlog__message " data-message-id="868569285566545931" id="message-868569285566545931" title="Message sent: 24-Jul-21 03:04 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="868569316109484032" id="message-868569316109484032" title="Message sent: 24-Jul-21 03:04 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(And I forgot to do that</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20%E3%80%96%F0%9F%91%91%E3%80%97aaron-ovengue%20%5B855570423307173968%5D.html_Files/fdb8ac32369fb09cc040f18c6746eabb-72BB3.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Aaron#0000" data-user-id="860595037217226792" style="">Aaron</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">24-Jul-21 03:05 PM</span>
+
+            <div class="chatlog__message " data-message-id="868569482782711849" id="message-868569482782711849" title="Message sent: 24-Jul-21 03:05 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>Anyways Aarons confused</em>
+&quot;WHAT TH-&quot;
+<em>He glances to the window</em>
+&quot;What the fuck is happenin?&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="868570857176440882" id="message-868570857176440882" title="Message sent: 24-Jul-21 03:10 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>He moves closer to the window</em>
+&quot;Woah the fuck there&#39;s sun?&quot;
+<em>He slowly begins to smile</em>
+&quot;Sun...&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20%E3%80%96%F0%9F%91%91%E3%80%97aaron-ovengue%20%5B855570423307173968%5D.html_Files/ce5e6032af81a0d2910a32c43d33f3a3-35A26.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="IPS#8799" data-user-id="403962675270516737" style="color: rgb(255,215,0)">Ito-Chan ^.^ (Blastoise)</span>
+
+
+        <span class="chatlog__timestamp">24-Jul-21 03:10 PM</span>
+
+            <div class="chatlog__message " data-message-id="868570964206698506" id="message-868570964206698506" title="Message sent: 24-Jul-21 03:10 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(he&#39;s british he hasn&#39;t seen the sun once his whole life)</span>
+
+                        </div>
+                    </div>
+
+
+
+                    <div class="chatlog__reactions">
+                            <div class="chatlog__reaction" title="sparkles">
+                                <img class="emoji emoji--small" alt="✨" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20%E3%80%96%F0%9F%91%91%E3%80%97aaron-ovengue%20%5B855570423307173968%5D.html_Files/2728-4239B.svg" loading="lazy">
+                                <span class="chatlog__reaction-count">2</span>
+                            </div>
+                    </div>
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20%E3%80%96%F0%9F%91%91%E3%80%97aaron-ovengue%20%5B855570423307173968%5D.html_Files/c5b5070ed3847e865c89156a9cc0cdb5-4D2DA.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="4MushroomSoap#1474" data-user-id="673944515417079847" style="">4MushroomSoap</span>
+
+
+        <span class="chatlog__timestamp">29-Jul-21 05:50 PM</span>
+
+            <div class="chatlog__message " data-message-id="870423129841885184" id="message-870423129841885184" title="Message sent: 29-Jul-21 05:50 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(I have ideas... so</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="870423204659871744" id="message-870423204659871744" title="Message sent: 29-Jul-21 05:51 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">=remindme 2hrs <strong>It&#39;s time. Don&#39;t forget</strong></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20%E3%80%96%F0%9F%91%91%E3%80%97aaron-ovengue%20%5B855570423307173968%5D.html_Files/2fa57b425415134d4f8b279174131ad6-98D95.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="YAGPDB.xyz#8760" data-user-id="204255221017214977" style="color: rgb(255,94,0)">YAGPDB.xyz</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">29-Jul-21 05:51 PM</span>
+
+            <div class="chatlog__message " data-message-id="870423205863641088" id="message-870423205863641088" title="Message sent: 29-Jul-21 05:51 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Set a reminder in 2 hours from now (29 Jul 21 23:51 UTC)
+View reminders with the reminders command</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20%E3%80%96%F0%9F%91%91%E3%80%97aaron-ovengue%20%5B855570423307173968%5D.html_Files/2fa57b425415134d4f8b279174131ad6-98D95.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="YAGPDB.xyz#8760" data-user-id="204255221017214977" style="color: rgb(255,94,0)">YAGPDB.xyz</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">29-Jul-21 07:51 PM</span>
+
+            <div class="chatlog__message " data-message-id="870453401639612426" id="message-870453401639612426" title="Message sent: 29-Jul-21 07:51 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><strong>Reminder</strong> <span class="mention" title="4MushroomSoap#1474">@4MushroomSoap</span>: <strong>It&#39;s time. Don&#39;t forget</strong></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20%E3%80%96%F0%9F%91%91%E3%80%97aaron-ovengue%20%5B855570423307173968%5D.html_Files/483f32491afc1d1ef25af9ce9744f961-8ED08.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Astrea#7171" data-user-id="229350299909881876" style="color: rgb(154,144,231)">Astrea Senpai | Goddess of Stars</span>
+
+
+        <span class="chatlog__timestamp">29-Jul-21 07:51 PM</span>
+
+            <div class="chatlog__message " data-message-id="870453520120303618" id="message-870453520120303618" title="Message sent: 29-Jul-21 07:51 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(did soap forget? find out in the next episode of despairs horizon z!</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20%E3%80%96%F0%9F%91%91%E3%80%97aaron-ovengue%20%5B855570423307173968%5D.html_Files/c5b5070ed3847e865c89156a9cc0cdb5-4D2DA.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="4MushroomSoap#1474" data-user-id="673944515417079847" style="">4MushroomSoap</span>
+
+
+        <span class="chatlog__timestamp">29-Jul-21 07:54 PM</span>
+
+            <div class="chatlog__message " data-message-id="870454190705623090" id="message-870454190705623090" title="Message sent: 29-Jul-21 07:54 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="870454204370665552" id="message-870454204370665552" title="Message sent: 29-Jul-21 07:54 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(I did</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="870454242467524629" id="message-870454242467524629" title="Message sent: 29-Jul-21 07:54 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(I NEEE TO GET SO MUCH DONE-</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20%E3%80%96%F0%9F%91%91%E3%80%97aaron-ovengue%20%5B855570423307173968%5D.html_Files/c5b5070ed3847e865c89156a9cc0cdb5-4D2DA.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="4MushroomSoap#1474" data-user-id="673944515417079847" style="">4MushroomSoap</span>
+
+
+        <span class="chatlog__timestamp">29-Jul-21 08:28 PM</span>
+
+            <div class="chatlog__message " data-message-id="870462732204380261" id="message-870462732204380261" title="Message sent: 29-Jul-21 08:28 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(I&#39;m starting~</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20%E3%80%96%F0%9F%91%91%E3%80%97aaron-ovengue%20%5B855570423307173968%5D.html_Files/c5b5070ed3847e865c89156a9cc0cdb5-4D2DA.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="4MushroomSoap#1474" data-user-id="673944515417079847" style="">4MushroomSoap</span>
+
+
+        <span class="chatlog__timestamp">29-Jul-21 09:11 PM</span>
+
+            <div class="chatlog__message " data-message-id="870473692180787210" id="message-870473692180787210" title="Message sent: 29-Jul-21 09:11 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">=remindme 20mins please finish it so you can do one more smol thing before sleep</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20%E3%80%96%F0%9F%91%91%E3%80%97aaron-ovengue%20%5B855570423307173968%5D.html_Files/2fa57b425415134d4f8b279174131ad6-98D95.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="YAGPDB.xyz#8760" data-user-id="204255221017214977" style="color: rgb(255,94,0)">YAGPDB.xyz</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">29-Jul-21 09:11 PM</span>
+
+            <div class="chatlog__message " data-message-id="870473693145485363" id="message-870473693145485363" title="Message sent: 29-Jul-21 09:11 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Set a reminder in 20 minutes from now (30 Jul 21 01:31 UTC)
+View reminders with the reminders command</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20%E3%80%96%F0%9F%91%91%E3%80%97aaron-ovengue%20%5B855570423307173968%5D.html_Files/181e6ca812405d275f2adb622ecc78fe-4BCE4.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="peroxide#1765" data-user-id="448815258060980226" style="color: rgb(26,188,156)">Kato Satsujin/Hydrogen</span>
+
+
+        <span class="chatlog__timestamp">29-Jul-21 09:12 PM</span>
+
+            <div class="chatlog__message " data-message-id="870473867376885830" id="message-870473867376885830" title="Message sent: 29-Jul-21 09:12 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(you&#39;re the person that sets like 50 alarms</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="870473895411585044" id="message-870473895411585044" title="Message sent: 29-Jul-21 09:12 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(that dont wake them up</span>
+
+                        </div>
+                    </div>
+
+
+
+                    <div class="chatlog__reactions">
+                            <div class="chatlog__reaction" title="Fukt">
+                                <img class="emoji emoji--small" alt="Fukt" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20%E3%80%96%F0%9F%91%91%E3%80%97aaron-ovengue%20%5B855570423307173968%5D.html_Files/755497698563457024-D9F52.png" loading="lazy">
+                                <span class="chatlog__reaction-count">1</span>
+                            </div>
+                    </div>
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20%E3%80%96%F0%9F%91%91%E3%80%97aaron-ovengue%20%5B855570423307173968%5D.html_Files/c5b5070ed3847e865c89156a9cc0cdb5-4D2DA.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="4MushroomSoap#1474" data-user-id="673944515417079847" style="">4MushroomSoap</span>
+
+
+        <span class="chatlog__timestamp">29-Jul-21 09:28 PM</span>
+
+            <div class="chatlog__message " data-message-id="870478008044114003" id="message-870478008044114003" title="Message sent: 29-Jul-21 09:28 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(I&#39;ve done it now though!</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="870478044823969813" id="message-870478044823969813" title="Message sent: 29-Jul-21 09:28 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(And I have plans for the next one</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="870478245018079322" id="message-870478245018079322" title="Message sent: 29-Jul-21 09:29 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(just over the character limit too</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20%E3%80%96%F0%9F%91%91%E3%80%97aaron-ovengue%20%5B855570423307173968%5D.html_Files/fdb8ac32369fb09cc040f18c6746eabb-72BB3.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Aaron#0000" data-user-id="860595037217226792" style="">Aaron</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">29-Jul-21 09:30 PM</span>
+
+            <div class="chatlog__message " data-message-id="870478417433346118" id="message-870478417433346118" title="Message sent: 29-Jul-21 09:30 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>Aaron is <u>not</u> happy. He dashes into his room in a rage, it even took him a few tries to open his room with the monopad due to it. The moment he walks in, he feels more heat that he already feels.</em>
+
+<em>It bothers him.</em>
+
+<em>He slams the door with a lot of force; the noise probably echoed throughout the hallway. He stood there in a daze for a moment: a temporary calm.</em>
+
+
+<strong>Why?</strong>
+
+
+<em>He then punched the wall closest to him breathing a bit heavy. His face looked troubled and angry</em>
+
+
+<strong>Why.</strong>
+
+<strong>WhyWhyWhyWhyWhyWhyWhyWhyWHY</strong>
+
+&quot;WHY? ABASI WHY?&quot;
+
+
+<em>He punched the wall a few more times. He really lost his calm he typically maintained. He eventually stopped and just regained his breath. He then looked down before falling onto his bed, looking up at the ceiling.</em>
+
+
+<em>&#39;Abasi why?&#39;</em>
+
+<em>&#39;Why did you get involved?&#39;</em>
+
+
+<strong>&quot;I wouldn&#39;t be here if you hadn&#39;t died.&quot;</strong>&#160;
+
+
+<em>He sighed, finally feeling calm. He&#39;s now feeling upset</em>
+
+&quot;Abasi, what would mum say if she found out?&quot;
+
+<em>He stared up at the ceiling in silence for a moment</em>
+
+&quot;She had so much high hopes for me to not become like you 2 ya know fam…. Now look at me&quot;
+
+<em>He groaned and bit his lip</em>
+
+
+&quot;... Abasi why did you die? Blud you should&#39;ve fought&quot;
+
+<em>&#39;Or is it better that you died?&#39;</em>
+
+&quot;Maybe… just maybe….&quot;
+
+<em>But then he shook his head</em>
+
+&quot;No! Abasi either way you&#39;ve left man alone.&quot;
+
+
+<strong>&quot;I wouldn&#39;t be here if you hadn&#39;t died. Blud you started a chain of events that I&#39;m stuck in.&quot;</strong>
+
+<em>He looked pained</em>
+
+&quot;FAM I DON&#39;T WANT TO BE HERE. I WAS NEVER MEANT TO&quot;
+
+<em>He then sat up to take off his puffer jacket and hang it up. Man&#39;s hot and bothered today.</em>
+
+
+&quot;... No one had to be shanked here either Abasi. Abasi why-&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="870478467353968650" id="message-870478467353968650" title="Message sent: 29-Jul-21 09:30 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>He crouched down and scratched his hair for a bit</em>
+
+&quot;Abasi....I&#39;m no better either Abasi.&quot;
+
+<em>He looked up at the ceiling</em>
+
+
+&quot;Bruv, <strong>did you see what I done?</strong>&quot;
+
+
+&quot;Fam <strong>it had to happen</strong>, but I can&#39;t believe… Fam I&#39;m no better aren&#39;t I?&quot;
+
+
+<em>He stood up again and looked down. He sighed trying to clear his head</em>
+
+
+<em>You know the plan. You know what you need to do. You know you have the power to do this now.</em>
+
+<em>You can&#39;t change the past. Think about the future</em>
+
+
+<em>He closed his eyes to make a small prayer in a tribal language before walking to the bathroom for a shower. He needs a proper cool off</em></span>
+
+                        </div>
+                    </div>
+
+
+
+                    <div class="chatlog__reactions">
+                            <div class="chatlog__reaction" title="clap">
+                                <img class="emoji emoji--small" alt="&#128079;" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20%E3%80%96%F0%9F%91%91%E3%80%97aaron-ovengue%20%5B855570423307173968%5D.html_Files/1f44f-879B4.svg" loading="lazy">
+                                <span class="chatlog__reaction-count">1</span>
+                            </div>
+                    </div>
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20%E3%80%96%F0%9F%91%91%E3%80%97aaron-ovengue%20%5B855570423307173968%5D.html_Files/2fa57b425415134d4f8b279174131ad6-98D95.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="YAGPDB.xyz#8760" data-user-id="204255221017214977" style="color: rgb(255,94,0)">YAGPDB.xyz</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">29-Jul-21 09:31 PM</span>
+
+            <div class="chatlog__message " data-message-id="870478726863913010" id="message-870478726863913010" title="Message sent: 29-Jul-21 09:31 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><strong>Reminder</strong> <span class="mention" title="4MushroomSoap#1474">@4MushroomSoap</span>: please finish it so you can do one more smol thing before sleep</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20%E3%80%96%F0%9F%91%91%E3%80%97aaron-ovengue%20%5B855570423307173968%5D.html_Files/483f32491afc1d1ef25af9ce9744f961-8ED08.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Astrea#7171" data-user-id="229350299909881876" style="color: rgb(154,144,231)">Astrea Senpai | Goddess of Stars</span>
+
+
+        <span class="chatlog__timestamp">29-Jul-21 09:31 PM</span>
+
+            <div class="chatlog__message " data-message-id="870478788826398801" id="message-870478788826398801" title="Message sent: 29-Jul-21 09:31 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(timing could have not been more perfect</span>
+
+                        </div>
+                    </div>
+
+
+
+                    <div class="chatlog__reactions">
+                            <div class="chatlog__reaction" title="sparkles">
+                                <img class="emoji emoji--small" alt="✨" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20%E3%80%96%F0%9F%91%91%E3%80%97aaron-ovengue%20%5B855570423307173968%5D.html_Files/2728-4239B.svg" loading="lazy">
+                                <span class="chatlog__reaction-count">1</span>
+                            </div>
+                    </div>
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20%E3%80%96%F0%9F%91%91%E3%80%97aaron-ovengue%20%5B855570423307173968%5D.html_Files/c5b5070ed3847e865c89156a9cc0cdb5-4D2DA.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="4MushroomSoap#1474" data-user-id="673944515417079847" style="">4MushroomSoap</span>
+
+
+        <span class="chatlog__timestamp">29-Jul-21 09:34 PM</span>
+
+            <div class="chatlog__message " data-message-id="870479515976085564" id="message-870479515976085564" title="Message sent: 29-Jul-21 09:34 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(final words:
+(The song I&#39;m currently listening to surprisingly became an inspiration. Why? <em>Reasons :D</em>
+Find the title, clue: it&#39;s in bold.
+(I also made an accidental K-pop reference I wonder if anyone spots it.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20%E3%80%96%F0%9F%91%91%E3%80%97aaron-ovengue%20%5B855570423307173968%5D.html_Files/fdb8ac32369fb09cc040f18c6746eabb-72BB3.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Aaron#0000" data-user-id="860595037217226792" style="">Aaron</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">02-Aug-21 04:22 PM</span>
+
+            <div class="chatlog__message " data-message-id="871850343372316672" id="message-871850343372316672" title="Message sent: 02-Aug-21 04:22 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>Into his room where he vibes. He thinks about recent events as he sits here</em></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20%E3%80%96%F0%9F%91%91%E3%80%97aaron-ovengue%20%5B855570423307173968%5D.html_Files/fdb8ac32369fb09cc040f18c6746eabb-72BB3.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Aaron#0000" data-user-id="860595037217226792" style="">Aaron</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">05-Aug-21 06:26 PM</span>
+
+            <div class="chatlog__message " data-message-id="872968785609494568" id="message-872968785609494568" title="Message sent: 05-Aug-21 06:26 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>Into his room he goes. He&#39;s off to take a shower</em></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20%E3%80%96%F0%9F%91%91%E3%80%97aaron-ovengue%20%5B855570423307173968%5D.html_Files/c5b5070ed3847e865c89156a9cc0cdb5-4D2DA.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="4MushroomSoap#1474" data-user-id="673944515417079847" style="">4MushroomSoap</span>
+
+
+        <span class="chatlog__timestamp">05-Aug-21 06:26 PM</span>
+
+            <div class="chatlog__message " data-message-id="872968860431691796" id="message-872968860431691796" title="Message sent: 05-Aug-21 06:26 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">=remindme 5hours <strong>It&#39;s time :)</strong></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20%E3%80%96%F0%9F%91%91%E3%80%97aaron-ovengue%20%5B855570423307173968%5D.html_Files/2fa57b425415134d4f8b279174131ad6-98D95.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="YAGPDB.xyz#8760" data-user-id="204255221017214977" style="color: rgb(255,94,0)">YAGPDB.xyz</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">05-Aug-21 06:26 PM</span>
+
+            <div class="chatlog__message " data-message-id="872968861505450054" id="message-872968861505450054" title="Message sent: 05-Aug-21 06:26 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Set a reminder in 5 hours from now (06 Aug 21 03:26 UTC)
+View reminders with the reminders command</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20%E3%80%96%F0%9F%91%91%E3%80%97aaron-ovengue%20%5B855570423307173968%5D.html_Files/2fa57b425415134d4f8b279174131ad6-98D95.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="YAGPDB.xyz#8760" data-user-id="204255221017214977" style="color: rgb(255,94,0)">YAGPDB.xyz</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">05-Aug-21 11:26 PM</span>
+
+            <div class="chatlog__message " data-message-id="873044361162674197" id="message-873044361162674197" title="Message sent: 05-Aug-21 11:26 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><strong>Reminder</strong> <span class="mention" title="4MushroomSoap#1474">@4MushroomSoap</span>: <strong>It&#39;s time :)</strong></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20%E3%80%96%F0%9F%91%91%E3%80%97aaron-ovengue%20%5B855570423307173968%5D.html_Files/c5b5070ed3847e865c89156a9cc0cdb5-4D2DA.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="4MushroomSoap#1474" data-user-id="673944515417079847" style="">4MushroomSoap</span>
+
+
+        <span class="chatlog__timestamp">06-Aug-21 09:39 AM</span>
+
+            <div class="chatlog__message " data-message-id="873198523498242118" id="message-873198523498242118" title="Message sent: 06-Aug-21 09:39 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(after Midas</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20%E3%80%96%F0%9F%91%91%E3%80%97aaron-ovengue%20%5B855570423307173968%5D.html_Files/c5b5070ed3847e865c89156a9cc0cdb5-4D2DA.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="4MushroomSoap#1474" data-user-id="673944515417079847" style="">4MushroomSoap</span>
+
+
+        <span class="chatlog__timestamp">12-Aug-21 04:02 AM</span>
+
+            <div class="chatlog__message " data-message-id="875288212262756422" id="message-875288212262756422" title="Message sent: 12-Aug-21 04:02 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(forgot.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20%E3%80%96%F0%9F%91%91%E3%80%97aaron-ovengue%20%5B855570423307173968%5D.html_Files/fdb8ac32369fb09cc040f18c6746eabb-72BB3.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Aaron#0000" data-user-id="860595037217226792" style="">Aaron</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">12-Aug-21 04:03 AM</span>
+
+            <div class="chatlog__message " data-message-id="875288329317388308" id="message-875288329317388308" title="Message sent: 12-Aug-21 04:03 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>Angy man is being Angy in his room</em></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20%E3%80%96%F0%9F%91%91%E3%80%97aaron-ovengue%20%5B855570423307173968%5D.html_Files/c5b5070ed3847e865c89156a9cc0cdb5-4D2DA.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="4MushroomSoap#1474" data-user-id="673944515417079847" style="">4MushroomSoap</span>
+
+
+        <span class="chatlog__timestamp">12-Aug-21 04:04 AM</span>
+
+            <div class="chatlog__message " data-message-id="875288636046864444" id="message-875288636046864444" title="Message sent: 12-Aug-21 04:04 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">=remindme 5 hours <em>freedom~</em>
+<strong>Write.</strong></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20%E3%80%96%F0%9F%91%91%E3%80%97aaron-ovengue%20%5B855570423307173968%5D.html_Files/2fa57b425415134d4f8b279174131ad6-98D95.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="YAGPDB.xyz#8760" data-user-id="204255221017214977" style="color: rgb(255,94,0)">YAGPDB.xyz</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">12-Aug-21 04:04 AM</span>
+
+            <div class="chatlog__message " data-message-id="875288637019942912" id="message-875288637019942912" title="Message sent: 12-Aug-21 04:04 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Set a reminder in 5 minutes from now (12 Aug 21 08:09 UTC)
+View reminders with the reminders command</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="875289895642468352" id="message-875289895642468352" title="Message sent: 12-Aug-21 04:09 AM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><strong>Reminder</strong> <span class="mention" title="4MushroomSoap#1474">@4MushroomSoap</span>: hours <em>freedom~</em>
+<strong>Write.</strong></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+</div>
+
+<div class="postamble">
+    <div class="postamble__entry">Exported 55 message(s)</div>
+</div>
+
+</body>
+
+</html>

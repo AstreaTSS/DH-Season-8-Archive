@@ -1,0 +1,3479 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Danganronpa: Despair&#39;s Horizon - inultes-sim</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+
+    <style>
+        @font-face {
+            font-family: Whitney;
+            src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-300.woff);
+            font-weight: 300;
+        }
+
+        @font-face {
+            font-family: Whitney;
+            src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-400.woff);
+            font-weight: 400;
+        }
+
+        @font-face {
+            font-family: Whitney;
+            src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-500.woff);
+            font-weight: 500;
+        }
+
+        @font-face {
+            font-family: Whitney;
+            src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-600.woff);
+            font-weight: 600;
+        }
+
+        @font-face {
+            font-family: Whitney;
+            src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-700.woff);
+            font-weight: 700;
+        }
+
+        body {
+            background-color: #36393e;
+            color: #dcddde;
+            font-family: "Whitney", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 17px;
+            font-weight: 400;
+        }
+
+        a {
+            color: #00aff4;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        img {
+            object-fit: contain;
+        }
+
+        .markdown {
+            max-width: 100%;
+            line-height: 1.3;
+            overflow-wrap: break-word;
+        }
+
+        .preserve-whitespace {
+            white-space: pre-wrap;
+        }
+
+        .spoiler-text {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+        }
+
+        .spoiler-text--hidden {
+            cursor: pointer;
+            background-color: #202225;
+            color: rgba(0, 0, 0, 0);
+        }
+
+        .spoiler-text--hidden:hover {
+            background-color: rgba(32, 34, 37, 0.8);
+        }
+
+        .spoiler-text--hidden::selection {
+            color: rgba(0, 0, 0, 0);
+        }
+
+        .quote {
+            display: flex;
+            margin: 0.05em 0;
+        }
+
+        .quote::before {
+            content: "";
+            margin-right: 0.5em;
+            border: 2px solid #4f545c;
+            border-radius: 3px;
+        }
+
+        .pre {
+            background-color: #2f3136;
+            font-family: "Consolas", "Courier New", Courier, monospace;
+        }
+
+        .pre--multiline {
+            margin-top: 0.25em;
+            padding: 0.5em;
+            border: 2px solid #282b30;
+            border-radius: 5px;
+            color: #b9bbbe;
+        }
+
+        .pre--multiline.hljs {
+            background-color: #2f3136;
+            color: #b9bbbe;
+        }
+
+        .pre--inline {
+            padding: 2px;
+            border-radius: 3px;
+            font-size: 0.85em;
+        }
+
+        .mention {
+            border-radius: 3px;
+            padding: 0 2px;
+            color: #7289da;
+            background-color: rgba(114, 137, 218, .1);
+            font-weight: 500;
+        }
+
+        .timestamp {
+            border-radius: 3px;
+            padding: 0 2px;
+            background-color: rgba(255, 255, 255, 0.06);
+        }
+
+        .emoji {
+            width: 1.325em;
+            height: 1.325em;
+            margin: 0 0.06em;
+            vertical-align: -0.4em;
+        }
+
+        .emoji--small {
+            width: 1em;
+            height: 1em;
+        }
+
+        .emoji--large {
+            width: 2.8em;
+            height: 2.8em;
+        }
+
+        .preamble {
+            display: grid;
+            margin: 0 0.3em 0.6em 0.3em;
+            max-width: 100%;
+            grid-template-columns: auto 1fr;
+        }
+
+        .preamble__guild-icon-container {
+            grid-column: 1;
+        }
+
+        .preamble__guild-icon {
+            max-width: 88px;
+            max-height: 88px;
+        }
+
+        .preamble__entries-container {
+            grid-column: 2;
+            margin-left: 0.6em;
+        }
+
+        .preamble__entry {
+            font-size: 1.4em;
+            color: #ffffff;
+        }
+
+        .preamble__entry--small {
+            font-size: 1em;
+        }
+
+        .chatlog {
+            max-width: 100%;
+        }
+
+        .chatlog__message-group {
+            display: grid;
+            margin: 0 0.6em;
+            padding: 0.9em 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            grid-template-columns: auto 1fr;
+        }
+
+        .chatlog__reference-symbol {
+            grid-column: 1;
+            margin: 8px 4px 4px 18px;
+            border-left: 2px solid #4f545c;
+            border-top: 2px solid #4f545c;
+            border-radius: 8px 0 0 0;
+        }
+
+        .chatlog__reference {
+            display: flex;
+            grid-column: 2;
+            margin-bottom: 0.25em;
+            font-size: 0.875em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            align-items: center;
+            color: #b5b6b8;
+        }
+
+        .chatlog__reference-avatar {
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            margin-right: 0.25em;
+        }
+
+        .chatlog__reference-name {
+            margin-right: 0.3em;
+            font-weight: 600;
+        }
+
+        .chatlog__reference-content {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .chatlog__reference-content a:hover {
+            text-decoration: none;
+        }
+
+        .chatlog__reference-link {
+            cursor: pointer;
+            color: #b5b6b8;
+        }
+
+        .chatlog__reference-link * {
+            display: inline;
+            pointer-events: none;
+        }
+
+        .chatlog__reference-link:hover {
+            color: #ffffff;
+        }
+
+        .chatlog__reference-link:hover *:not(.spoiler-text) {
+            color: #ffffff;
+        }
+
+        .chatlog__reference-edited-timestamp {
+            margin-left: 0.25em;
+            font-size: 0.8em;
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        .chatlog__author-avatar-container {
+            grid-column: 1;
+            width: 40px;
+            height: 40px;
+            margin-right: 16px;
+        }
+
+        .chatlog__author-avatar {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+        }
+
+        .chatlog__messages {
+            grid-column: 2;
+            min-width: 50%;
+        }
+
+        .chatlog__author-name {
+            font-weight: 500;
+            color: #ffffff;
+        }
+
+        .chatlog__timestamp {
+            margin-left: 0.3em;
+            font-size: 0.75em;
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        .chatlog__message {
+            padding: 0.1em 0.3em;
+            margin: 0 -0.3em;
+            background-color: transparent;
+            transition: background-color 1s ease;
+        }
+
+        .chatlog__message--highlighted {
+            background-color: rgba(114, 137, 218, 0.2);
+        }
+
+        .chatlog__message--pinned {
+            background-color: rgba(249, 168, 37, 0.05);
+        }
+
+        .chatlog__content {
+            font-size: 0.95em;
+            word-wrap: break-word;
+        }
+
+        .chatlog__edited-timestamp {
+            margin-left: 0.15em;
+            font-size: 0.8em;
+        }
+
+        .chatlog__attachment {
+            display: inline-block;
+            position: relative;
+            margin-top: 0.3em;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .chatlog__attachment--hidden {
+            cursor: pointer;
+            box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
+        }
+
+        .chatlog__attachment--hidden * {
+            pointer-events: none;
+        }
+
+        .chatlog__attachment-spoiler-caption {
+            display: none;
+            z-index: 999;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            padding: 0.4em 0.8em;
+            background-color: rgba(0, 0, 0, 0.9);
+            border-radius: 20px;
+            color: #dcddde;
+            font-size: 0.9em;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+
+        .chatlog__attachment--hidden .chatlog__attachment-spoiler-caption {
+            display: block;
+        }
+
+        .chatlog__attachment--hidden:hover .chatlog__attachment-spoiler-caption {
+            color: #fff;
+        }
+
+        .chatlog__attachment-media {
+            vertical-align: top;
+            max-width: 45vw;
+            max-height: 500px;
+            border-radius: 3px;
+        }
+
+        .chatlog__attachment--hidden .chatlog__attachment-media {
+            filter: blur(44px);
+        }
+
+        .chatlog__attachment-generic {
+            width: 100%;
+            max-width: 520px;
+            height: 40px;
+            padding: 10px;
+            background-color: #2f3136;
+            border: 1px solid #292b2f;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .chatlog__attachment--hidden .chatlog__attachment-generic {
+            filter: blur(44px);
+        }
+
+        .chatlog__attachment-generic-icon {
+            float: left;
+            width: 30px;
+            height: 100%;
+            margin-right: 10px;
+        }
+
+        .chatlog__attachment-generic-size {
+            color: #72767d;
+            font-size: 12px;
+        }
+
+        .chatlog__attachment-generic-name {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .chatlog__edited-timestamp {
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        .chatlog__embed {
+            display: flex;
+            margin-top: 0.3em;
+            max-width: 520px;
+        }
+
+        .chatlog__embed-color-pill {
+            flex-shrink: 0;
+            width: 0.25em;
+            border-top-left-radius: 3px;
+            border-bottom-left-radius: 3px;
+        }
+
+        .chatlog__embed-color-pill--default {
+            background-color: #202225;
+        }
+
+        .chatlog__embed-content-container {
+            display: flex;
+            flex-direction: column;
+            padding: 0.5em 0.6em;
+            background-color: rgba(46, 48, 54, 0.3);
+            border: 1px solid rgba(46, 48, 54, 0.6);
+            border-top-right-radius: 3px;
+            border-bottom-right-radius: 3px;
+        }
+
+        .chatlog__embed-content {
+            display: flex;
+            width: 100%;
+        }
+
+        .chatlog__embed-text {
+            flex: 1;
+        }
+
+        .chatlog__embed-author {
+            display: flex;
+            margin-bottom: 0.3em;
+            align-items: center;
+        }
+
+        .chatlog__embed-author-icon {
+            margin-right: 0.5em;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+
+        .chatlog__embed-author-name {
+            font-size: 0.875em;
+            font-weight: 600;
+            color: #ffffff
+        }
+
+        .chatlog__embed-author-name-link {
+            color: #ffffff;
+        }
+
+        .chatlog__embed-title {
+            margin-bottom: 0.2em;
+            font-size: 0.875em;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .chatlog__embed-description {
+            font-weight: 500;
+            font-size: 0.85em;
+            color: #dcddde;
+        }
+
+        .chatlog__embed-fields {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0 0.5em;
+        }
+
+        .chatlog__embed-field {
+            flex: 0;
+            min-width: 100%;
+            max-width: 506px;
+            padding-top: 0.6em;
+            font-size: 0.875em;
+        }
+
+        .chatlog__embed-field--inline {
+            flex: 1;
+            flex-basis: auto;
+            min-width: 150px;
+        }
+
+        .chatlog__embed-field-name {
+            margin-bottom: 0.2em;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .chatlog__embed-field-value {
+            font-weight: 500;
+            color: #dcddde;
+        }
+
+        .chatlog__embed-thumbnail {
+            flex: 0;
+            margin-left: 1.2em;
+            max-width: 80px;
+            max-height: 80px;
+            border-radius: 3px;
+        }
+
+        .chatlog__embed-image-container {
+            margin-top: 0.6em;
+        }
+
+        .chatlog__embed-image {
+            max-width: 500px;
+            max-height: 400px;
+            border-radius: 3px;
+        }
+
+        .chatlog__embed-footer {
+            margin-top: 0.6em;
+            color: #dcddde;
+        }
+
+        .chatlog__embed-footer-icon {
+            margin-right: 0.2em;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            vertical-align: middle;
+        }
+
+        .chatlog__embed-footer-text {
+            vertical-align: middle;
+            font-size: 0.75em;
+            font-weight: 500;
+        }
+
+        .chatlog__embed-plainimage {
+            vertical-align: top;
+            max-width: 45vw;
+            max-height: 500px;
+            border-radius: 3px;
+        }
+
+        .chatlog__embed-spotify {
+            border: 0;
+        }
+
+        .chatlog__embed-youtube-container {
+            margin-top: 0.6em;
+        }
+
+        .chatlog__embed-youtube {
+            border: 0;
+            border-radius: 3px;
+        }
+
+        .chatlog__reactions {
+            display: flex;
+        }
+
+        .chatlog__reaction {
+            display: flex;
+            align-items: center;
+            margin: 0.35em 0.1em 0.1em 0.1em;
+            padding: 0.2em 0.35em;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 3px;
+        }
+
+        .chatlog__reaction-count {
+            min-width: 9px;
+            margin-left: 0.35em;
+            font-size: 0.875em;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .chatlog__bot-tag {
+            position: relative;
+            top: -.1em;
+            margin-left: 0.3em;
+            padding: 0.05em 0.3em;
+            border-radius: 3px;
+            line-height: 1.3;
+            background-color: #5865F2;
+            color: #ffffff;
+            font-size: 0.625em;
+            font-weight: 500;
+        }
+
+        .postamble {
+            margin: 1.4em 0.3em 0.6em 0.3em;
+            padding: 1em;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .postamble__entry {
+            color: #ffffff;
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/solarized-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.pre--multiline').forEach(block => hljs.highlightBlock(block));
+        });
+    </script>
+
+    <script>
+        function scrollToMessage(event, id) {
+            var element = document.getElementById('message-' + id);
+
+            if (element) {
+                event.preventDefault();
+
+                element.classList.add('chatlog__message--highlighted');
+
+                window.scrollTo({
+                    top: element.getBoundingClientRect().top - document.body.getBoundingClientRect().top - (window.innerHeight / 2),
+                    behavior: 'smooth'
+                });
+
+                window.setTimeout(function() {
+                    element.classList.remove('chatlog__message--highlighted');
+                }, 2000);
+            }
+        }
+
+        function showSpoiler(event, element) {
+            if (element && element.classList.contains('spoiler-text--hidden')) {
+                event.preventDefault();
+                element.classList.remove('spoiler-text--hidden');
+            }
+            if (element && element.classList.contains('chatlog__attachment--hidden')) {
+                event.preventDefault();
+                element.classList.remove('chatlog__attachment--hidden');
+            }
+        }
+    </script>
+
+    <svg style="display: none">
+        <symbol id="icon-attachment" viewBox="0 0 720 960">
+            <path fill="#f4f5fb" d="M50,935a25,25,0,0,1-25-25V50A25,25,0,0,1,50,25H519.6L695,201.32V910a25,25,0,0,1-25,25Z" />
+            <path fill="#7789c4" d="M509.21,50,670,211.63V910H50V50H509.21M530,0H50A50,50,0,0,0,0,50V910a50,50,0,0,0,50,50H670a50,50,0,0,0,50-50h0V191Z" />
+            <path fill="#f4f5fb" d="M530,215a25,25,0,0,1-25-25V50a25,25,0,0,1,16.23-23.41L693.41,198.77A25,25,0,0,1,670,215Z" />
+            <path fill="#7789c4" d="M530,70.71,649.29,190H530V70.71M530,0a50,50,0,0,0-50,50V190a50,50,0,0,0,50,50H670a50,50,0,0,0,50-50Z" />
+        </symbol>
+    </svg>
+</head>
+<body>
+
+<div class="preamble">
+    <div class="preamble__guild-icon-container">
+        <img class="preamble__guild-icon" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/a_2f7c80d0e7b055c4cf7f616eb37ae513-2180D.png" alt="Guild icon" loading="lazy">
+    </div>
+    <div class="preamble__entries-container">
+        <div class="preamble__entry">Danganronpa: Despair&#39;s Horizon</div>
+        <div class="preamble__entry">•-✧❅Chapter 4 Motive❅✧-• / inultes-sim</div>
+
+
+    </div>
+</div>
+
+<div class="chatlog">
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/1695350fa348813e1c2b1694b0971eb2-6D88A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="ImReallyScrewed#8206" data-user-id="578326021443420160" style="color: rgb(211,36,36)">Brilliance is fleeting.</span>
+
+
+        <span class="chatlog__timestamp">27-Jul-21 12:31 PM</span>
+
+            <div class="chatlog__message " data-message-id="869617894491836457" id="message-869617894491836457" title="Message sent: 27-Jul-21 12:31 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">( <span class="mention" title="PandaPrince#0321">@Inultes Fouvate | Panda</span> 
+(im ready when you are</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/a_014b2e98ab0b46fa868fb6c74efa7c98-3EC09.gif" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="PandaPrince#0321" data-user-id="339972906693951489" style="color: rgb(255,94,0)">Inultes Fouvate | Panda</span>
+
+
+        <span class="chatlog__timestamp">27-Jul-21 12:31 PM</span>
+
+            <div class="chatlog__message " data-message-id="869618066621857912" id="message-869618066621857912" title="Message sent: 27-Jul-21 12:31 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">((bet</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="869618203851096144" id="message-869618203851096144" title="Message sent: 27-Jul-21 12:32 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><span class="mention" title="ImReallyScrewed#8206">@Brilliance is fleeting.</span> ))</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/1695350fa348813e1c2b1694b0971eb2-6D88A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="ImReallyScrewed#8206" data-user-id="578326021443420160" style="color: rgb(211,36,36)">Brilliance is fleeting.</span>
+
+
+        <span class="chatlog__timestamp">27-Jul-21 12:32 PM</span>
+
+            <div class="chatlog__message " data-message-id="869618363146588180" id="message-869618363146588180" title="Message sent: 27-Jul-21 12:32 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(kk</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="869618413490827315" id="message-869618413490827315" title="Message sent: 27-Jul-21 12:33 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(also doing someone else&#39;s at the same time as this so</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/a_014b2e98ab0b46fa868fb6c74efa7c98-3EC09.gif" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="PandaPrince#0321" data-user-id="339972906693951489" style="color: rgb(255,94,0)">Inultes Fouvate | Panda</span>
+
+
+        <span class="chatlog__timestamp">27-Jul-21 12:33 PM</span>
+
+            <div class="chatlog__message " data-message-id="869618578352119828" id="message-869618578352119828" title="Message sent: 27-Jul-21 12:33 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">((alr, just take ya time and stuff</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/1695350fa348813e1c2b1694b0971eb2-6D88A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="ImReallyScrewed#8206" data-user-id="578326021443420160" style="color: rgb(211,36,36)">Brilliance is fleeting.</span>
+
+
+        <span class="chatlog__timestamp">27-Jul-21 12:35 PM</span>
+
+            <div class="chatlog__message " data-message-id="869618959190749184" id="message-869618959190749184" title="Message sent: 27-Jul-21 12:35 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="quote"><em>Inultes wakes up in a pure white dorm, after all of his interactions the night before the motive. It almost feels like a dream, yet you know it&#39;s not since all your senses are working. The room is medium sized, about 15x15 feet.</em>
+</div>&gt; 
+<div class="quote"><em>In the center of the room, there&#39;s two armchairs with a small coffee table. No one&#39;s sitting on either chair, but there are two still warm cups of coffee for Inultes.</em></div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/b3e204937e334ad859bcea03bdea7721-CDD3B.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Inultes Fouvate#0000" data-user-id="869619680669732934" style="">Inultes Fouvate</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">27-Jul-21 12:38 PM</span>
+
+            <div class="chatlog__message " data-message-id="869619681173078068" id="message-869619681173078068" title="Message sent: 27-Jul-21 12:38 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>Inultes feels a bit off put by the room, though isn&#39;t too worried since he doesn&#39;t feel as though he&#39;s in any danger...yet. He walks over to the chairs, speaking out loud to...well, not himself.</em> &quot;I k-know Nyarla, but there&#39;s nothing else t-to do...&quot; <em>Inultes then sits down in one of the chairs, choosing not to take the coffee. Not out of caution, he just didn&#39;t like the coffee that was in front of him.</em></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/1695350fa348813e1c2b1694b0971eb2-6D88A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="ImReallyScrewed#8206" data-user-id="578326021443420160" style="color: rgb(211,36,36)">Brilliance is fleeting.</span>
+
+
+        <span class="chatlog__timestamp">27-Jul-21 01:09 PM</span>
+
+            <div class="chatlog__message " data-message-id="869627620390735882" id="message-869627620390735882" title="Message sent: 27-Jul-21 01:09 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="quote"><em>Almost like a jumpscare (since it’s completely silent), Monokuma’s voice suddenly pierces through the silence.</em></div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/cb1a7444d1258f4a15c878bc34ca1178-CC1C8.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Monokuma#0000" data-user-id="869619680669732934" style="">Monokuma</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">27-Jul-21 01:09 PM</span>
+
+            <div class="chatlog__message " data-message-id="869627640909279233" id="message-869627640909279233" title="Message sent: 27-Jul-21 01:09 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Puhuhuhu~! Hey there!&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/b3e204937e334ad859bcea03bdea7721-CDD3B.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Inultes Fouvate#0000" data-user-id="869619680669732934" style="">Inultes Fouvate</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">27-Jul-21 01:11 PM</span>
+
+            <div class="chatlog__message " data-message-id="869628101519347783" id="message-869628101519347783" title="Message sent: 27-Jul-21 01:11 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>Inultes jumps, looking around for wherever Monokuma is.</em> &quot;W-Why did you bring m-me here! Where a-are you!&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/1695350fa348813e1c2b1694b0971eb2-6D88A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="ImReallyScrewed#8206" data-user-id="578326021443420160" style="color: rgb(211,36,36)">Brilliance is fleeting.</span>
+
+
+        <span class="chatlog__timestamp">27-Jul-21 01:12 PM</span>
+
+            <div class="chatlog__message " data-message-id="869628357703270470" id="message-869628357703270470" title="Message sent: 27-Jul-21 01:12 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="quote"><em>Monokuma goes and sits on the chair across from Inultes.</em> 
+</div>
+&quot;Here? Isn&#39;t &#39;here&#39; a nice room? Don&#39;t you like it? Do you?&quot;</span>
+
+                                <span class="chatlog__edited-timestamp" title="27-Jul-21 01:12 PM">(edited)</span>
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/b3e204937e334ad859bcea03bdea7721-CDD3B.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Inultes Fouvate#0000" data-user-id="869619680669732934" style="">Inultes Fouvate</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">27-Jul-21 01:13 PM</span>
+
+            <div class="chatlog__message " data-message-id="869628582664753212" id="message-869628582664753212" title="Message sent: 27-Jul-21 01:13 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>Inultes looks over at Monokuma.</em> &quot;This r-room...feels empty. D-Dead. Why a-are we h-here?&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/cb1a7444d1258f4a15c878bc34ca1178-CC1C8.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Monokuma#0000" data-user-id="869619680669732934" style="">Monokuma</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">27-Jul-21 01:14 PM</span>
+
+            <div class="chatlog__message " data-message-id="869628704811253760" id="message-869628704811253760" title="Message sent: 27-Jul-21 01:14 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;No particular reason. I&#39;m bored, after all.&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+                    <div class="chatlog__reactions">
+                            <div class="chatlog__reaction" title="Mastermindstrueidentity">
+                                <img class="emoji emoji--small" alt="Mastermindstrueidentity" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/688908689851416797-8D991.png" loading="lazy">
+                                <span class="chatlog__reaction-count">3</span>
+                            </div>
+                    </div>
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/b3e204937e334ad859bcea03bdea7721-CDD3B.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Inultes Fouvate#0000" data-user-id="869619680669732934" style="">Inultes Fouvate</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">27-Jul-21 01:15 PM</span>
+
+            <div class="chatlog__message " data-message-id="869628987578671235" id="message-869628987578671235" title="Message sent: 27-Jul-21 01:15 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Bored...I-Is that the point o-of this? To just t-talk to me l-leisurely?&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/cb1a7444d1258f4a15c878bc34ca1178-CC1C8.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Monokuma#0000" data-user-id="869619680669732934" style="">Monokuma</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">27-Jul-21 01:17 PM</span>
+
+            <div class="chatlog__message " data-message-id="869629507571695616" id="message-869629507571695616" title="Message sent: 27-Jul-21 01:17 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;No. Not really. Let&#39;s try a ć̷̍h̴̀͑á̶̂n̵͛̐g̵͗̋e̶̓͘ ̸̀̾i̴͗̅n̷̑́ ̶̈̓s̷̾͌c̵͋̂e̵͋̀n̸͋͗e̴̐͗r̸̈̅ý̸́.̴̊́&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/1695350fa348813e1c2b1694b0971eb2-6D88A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="ImReallyScrewed#8206" data-user-id="578326021443420160" style="color: rgb(211,36,36)">Brilliance is fleeting.</span>
+
+
+        <span class="chatlog__timestamp">27-Jul-21 01:17 PM</span>
+
+            <div class="chatlog__message " data-message-id="869629542820610120" id="message-869629542820610120" title="Message sent: 27-Jul-21 01:17 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="quote"><em>Monokuma&#39;s voice distorted there, and he disappeared. Hmmm...</em></div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/b3e204937e334ad859bcea03bdea7721-CDD3B.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Inultes Fouvate#0000" data-user-id="869619680669732934" style="">Inultes Fouvate</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">27-Jul-21 01:17 PM</span>
+
+            <div class="chatlog__message " data-message-id="869629646659022919" id="message-869629646659022919" title="Message sent: 27-Jul-21 01:17 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>Inultes looks around, trying to find where Monokuma had gone this time. Change in scenery? What the fuck does he mean by that?</em></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/1695350fa348813e1c2b1694b0971eb2-6D88A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="ImReallyScrewed#8206" data-user-id="578326021443420160" style="color: rgb(211,36,36)">Brilliance is fleeting.</span>
+
+
+        <span class="chatlog__timestamp">27-Jul-21 01:22 PM</span>
+
+            <div class="chatlog__message " data-message-id="869630721499742260" id="message-869630721499742260" title="Message sent: 27-Jul-21 01:22 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="quote"><em>The room shifted and changed color around Inultes, changing into.. a new scene.</em>
+</div>&gt; 
+<div class="quote"><em>The chairs disappeared, probably causing Inultes to land on his butt. Though, there&#39;s something else to worry about. The room changed into a scene from Inultes&#39; past. It showed his orphanage, with a smaller Inultes standing in the center with some older kids. Looking at Inultes (2, electric boogaloo), you could see bruises and scrapes on him.</em>
+</div>&gt; 
+<div class="quote"><em>The room matched exactly what happened that day.</em></div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/4e985876052d73d841f66d39c08a7e2e-96B94.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Inultes [Beach Episode]#0000" data-user-id="869619680669732934" style="">Inultes [Beach Episode]</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">27-Jul-21 01:25 PM</span>
+
+            <div class="chatlog__message " data-message-id="869631576630231110" id="message-869631576630231110" title="Message sent: 27-Jul-21 01:25 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>Inultes recognizes the scene, himself and the very bruises that were on his body. There was a look of obvious fear in his face, shaking as he&#39;s starting to realize what this is going to be.</em></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/cb1a7444d1258f4a15c878bc34ca1178-CC1C8.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Monokuma#0000" data-user-id="869619680669732934" style="">Monokuma</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">27-Jul-21 01:28 PM</span>
+
+            <div class="chatlog__message " data-message-id="869632268593930241" id="message-869632268593930241" title="Message sent: 27-Jul-21 01:28 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Oh, toughen up, would you?&quot; <em>Monokuma laughed at Inultes.</em> &quot;Just look at yourself... Pathetic.&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/b3e204937e334ad859bcea03bdea7721-CDD3B.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Inultes Fouvate#0000" data-user-id="869619680669732934" style="">Inultes Fouvate</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">27-Jul-21 01:29 PM</span>
+
+            <div class="chatlog__message " data-message-id="869632649755512902" id="message-869632649755512902" title="Message sent: 27-Jul-21 01:29 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>Inultes starts to snarl, looking around for wherever Monokuma was. He wanted him to toughen up, so he&#39;ll try! Though its obvious that the fear was still there.</em> &quot;W-Where are you! Show y-yourself n-now!&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/cb1a7444d1258f4a15c878bc34ca1178-CC1C8.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Monokuma#0000" data-user-id="869619680669732934" style="">Monokuma</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">27-Jul-21 01:31 PM</span>
+
+            <div class="chatlog__message " data-message-id="869633052316414054" id="message-869633052316414054" title="Message sent: 27-Jul-21 01:31 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Me? Shouldn&#39;t you be worried about.. yourself?&quot; <em>The bullying in the scene got worse, and Inultes 2 seemed to be taking a heavy beating.</em></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/b3e204937e334ad859bcea03bdea7721-CDD3B.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Inultes Fouvate#0000" data-user-id="869619680669732934" style="">Inultes Fouvate</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">27-Jul-21 01:34 PM</span>
+
+            <div class="chatlog__message " data-message-id="869633863394144346" id="message-869633863394144346" title="Message sent: 27-Jul-21 01:34 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>Inultes looks at the scene, at himself. He wants to lunge directly at the bullies, his entire body tensing up to do so though... he seems to be calming himself down somewhat.</em> &quot;E-Even if I were t-to do something...It&#39;d be u-useless here, even if I w-wanted to. So why s-show me this! Just to m-make me remember what they d-did to me?&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/cb1a7444d1258f4a15c878bc34ca1178-CC1C8.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Monokuma#0000" data-user-id="869619680669732934" style="">Monokuma</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">27-Jul-21 01:45 PM</span>
+
+            <div class="chatlog__message " data-message-id="869636676815843398" id="message-869636676815843398" title="Message sent: 27-Jul-21 01:45 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;No. It&#39;s to show how p̵͑͝á̷̇ẗ̷̛́h̶́̓ē̵͌ț̶͌i̸͂͠č̸̀ ̷̛̽y̴͘͠o̵͆͌u̵͊̅ ̸͊̐ȃ̴̓ȑ̵̓ȅ̸̾.̴̀̀&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/1695350fa348813e1c2b1694b0971eb2-6D88A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="ImReallyScrewed#8206" data-user-id="578326021443420160" style="color: rgb(211,36,36)">Brilliance is fleeting.</span>
+
+
+        <span class="chatlog__timestamp">27-Jul-21 01:46 PM</span>
+
+            <div class="chatlog__message " data-message-id="869636925789732944" id="message-869636925789732944" title="Message sent: 27-Jul-21 01:46 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="quote"><em>The scene shifted again to show a pitch black room with a younger Inultes just standing there in the middle. This Inultes seemed to be distressed, but didn&#39;t move an inch.</em>
+</div>&gt; 
+<div class="quote"><em>However, curled up beside Inultes was a shadowy black figure. I suspect you know who this is.</em></div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/b3e204937e334ad859bcea03bdea7721-CDD3B.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Inultes Fouvate#0000" data-user-id="869619680669732934" style="">Inultes Fouvate</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">27-Jul-21 01:48 PM</span>
+
+            <div class="chatlog__message " data-message-id="869637295135944756" id="message-869637295135944756" title="Message sent: 27-Jul-21 01:48 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>Inultes flinches at a headache, seeming in intense pain as he stares at this new scene.</em> &quot;A y-younger me...and some cheap c-copy of Nyarlathotep? Why show m-me this one t-then?&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/cb1a7444d1258f4a15c878bc34ca1178-CC1C8.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Monokuma#0000" data-user-id="869619680669732934" style="">Monokuma</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">27-Jul-21 01:49 PM</span>
+
+            <div class="chatlog__message " data-message-id="869637669691478057" id="message-869637669691478057" title="Message sent: 27-Jul-21 01:49 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;You can&#39;t do anything without Nyarlathotep. You&#39;re not fooling anyone.&quot;
+
+&quot;After all, you&#39;re weak.&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/b3e204937e334ad859bcea03bdea7721-CDD3B.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Inultes Fouvate#0000" data-user-id="869619680669732934" style="">Inultes Fouvate</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">27-Jul-21 01:56 PM</span>
+
+            <div class="chatlog__message " data-message-id="869639506112970822" id="message-869639506112970822" title="Message sent: 27-Jul-21 01:56 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>Inultes looks over at his weak self, then up at the ceiling(?).</em> &quot;I may be w-weak, but at least i&#39;ve managed to keep some o-of the people here hopeful for the future! Even Nyarlathotep w-wasn&#39;t helping me i-in that regard.&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/a_014b2e98ab0b46fa868fb6c74efa7c98-3EC09.gif" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="PandaPrince#0321" data-user-id="339972906693951489" style="color: rgb(255,94,0)">Inultes Fouvate | Panda</span>
+
+
+        <span class="chatlog__timestamp">27-Jul-21 02:00 PM</span>
+
+            <div class="chatlog__message " data-message-id="869640300950351902" id="message-869640300950351902" title="Message sent: 27-Jul-21 02:00 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">((kev this shit is ass at trying to break his hope <img loading="lazy" class="emoji " alt="Lmao" title="Lmao" src="https://cdn.discordapp.com/emojis/834893036633981008.gif"></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="869640339399516170" id="message-869640339399516170" title="Message sent: 27-Jul-21 02:00 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">((this kid has not broken at all this season except physically</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/1695350fa348813e1c2b1694b0971eb2-6D88A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="ImReallyScrewed#8206" data-user-id="578326021443420160" style="color: rgb(211,36,36)">Brilliance is fleeting.</span>
+
+
+        <span class="chatlog__timestamp">27-Jul-21 02:00 PM</span>
+
+            <div class="chatlog__message " data-message-id="869640418999042078" id="message-869640418999042078" title="Message sent: 27-Jul-21 02:00 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(WHAT ELSE AM I SUPPOSED TO DO RN</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/a_014b2e98ab0b46fa868fb6c74efa7c98-3EC09.gif" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="PandaPrince#0321" data-user-id="339972906693951489" style="color: rgb(255,94,0)">Inultes Fouvate | Panda</span>
+
+
+        <span class="chatlog__timestamp">27-Jul-21 02:00 PM</span>
+
+            <div class="chatlog__message " data-message-id="869640515635777636" id="message-869640515635777636" title="Message sent: 27-Jul-21 02:00 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">well, you can show hallucinations or whatever these are right?))</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/1695350fa348813e1c2b1694b0971eb2-6D88A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="ImReallyScrewed#8206" data-user-id="578326021443420160" style="color: rgb(211,36,36)">Brilliance is fleeting.</span>
+
+
+        <span class="chatlog__timestamp">27-Jul-21 02:01 PM</span>
+
+            <div class="chatlog__message " data-message-id="869640557008416768" id="message-869640557008416768" title="Message sent: 27-Jul-21 02:01 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(i have an idea</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/a_014b2e98ab0b46fa868fb6c74efa7c98-3EC09.gif" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="PandaPrince#0321" data-user-id="339972906693951489" style="color: rgb(255,94,0)">Inultes Fouvate | Panda</span>
+
+
+        <span class="chatlog__timestamp">27-Jul-21 02:01 PM</span>
+
+            <div class="chatlog__message " data-message-id="869640560166707200" id="message-869640560166707200" title="Message sent: 27-Jul-21 02:01 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">((he doesn&#39;t care about himself after all =)</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/1695350fa348813e1c2b1694b0971eb2-6D88A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="ImReallyScrewed#8206" data-user-id="578326021443420160" style="color: rgb(211,36,36)">Brilliance is fleeting.</span>
+
+
+        <span class="chatlog__timestamp">27-Jul-21 02:01 PM</span>
+
+            <div class="chatlog__message " data-message-id="869640561471143936" id="message-869640561471143936" title="Message sent: 27-Jul-21 02:01 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(hmph</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/cb1a7444d1258f4a15c878bc34ca1178-CC1C8.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Monokuma#0000" data-user-id="869619680669732934" style="">Monokuma</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">27-Jul-21 02:03 PM</span>
+
+            <div class="chatlog__message " data-message-id="869641056256409632" id="message-869641056256409632" title="Message sent: 27-Jul-21 02:03 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Hey... hey, hey, hey! What&#39;s the deal here...?&quot;
+
+&quot;Looks like you don&#39;t care about yourself.&quot; <em>The scene glitched around and changed before finally settling on a scene with multiple dead bodies scattered around the room. The dead bodies of every dead participant in the KG in fact.</em></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="869641096517529600" id="message-869641096517529600" title="Message sent: 27-Jul-21 02:03 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Maan....&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/a_014b2e98ab0b46fa868fb6c74efa7c98-3EC09.gif" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="PandaPrince#0321" data-user-id="339972906693951489" style="color: rgb(255,94,0)">Inultes Fouvate | Panda</span>
+
+
+        <span class="chatlog__timestamp">27-Jul-21 02:03 PM</span>
+
+            <div class="chatlog__message " data-message-id="869641106344804452" id="message-869641106344804452" title="Message sent: 27-Jul-21 02:03 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">((there we go finally</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="869641118239834113" id="message-869641118239834113" title="Message sent: 27-Jul-21 02:03 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">((something good</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="869641206601248788" id="message-869641206601248788" title="Message sent: 27-Jul-21 02:03 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">((gimme a bit im cleanin my fuckin stuffed animals <img loading="lazy" class="emoji " alt="Fukt" title="Fukt" src="https://cdn.discordapp.com/emojis/755497698563457024.png"></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/1695350fa348813e1c2b1694b0971eb2-6D88A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="ImReallyScrewed#8206" data-user-id="578326021443420160" style="color: rgb(211,36,36)">Brilliance is fleeting.</span>
+
+
+        <span class="chatlog__timestamp">27-Jul-21 02:03 PM</span>
+
+            <div class="chatlog__message " data-message-id="869641233851625543" id="message-869641233851625543" title="Message sent: 27-Jul-21 02:03 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(ito moment</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/b3e204937e334ad859bcea03bdea7721-CDD3B.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Inultes Fouvate#0000" data-user-id="869619680669732934" style="">Inultes Fouvate</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">27-Jul-21 02:08 PM</span>
+
+            <div class="chatlog__message " data-message-id="869642442624864287" id="message-869642442624864287" title="Message sent: 27-Jul-21 02:08 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>There we go, kev&#39;s finally good at traumatizing ocs. Inultes looks around at the dead bodies, flinching as he starts to spot certain peoples dead bodies. Ito-chans, Nines, Hoshi, Aikawa, Sayaka... He seems to be cracking, somewhat.</em> &quot;S-So what&#39;s the point o-of this then!&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/cb1a7444d1258f4a15c878bc34ca1178-CC1C8.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Monokuma#0000" data-user-id="869619680669732934" style="">Monokuma</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">27-Jul-21 02:09 PM</span>
+
+            <div class="chatlog__message " data-message-id="869642753892577312" id="message-869642753892577312" title="Message sent: 27-Jul-21 02:09 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Hmmm...?&quot;
+
+<div class="quote"><em>Noticeably, one person is missing. Inultes himself. The hologram-Inultes seems to be standing with a knife in his hand. It&#39;s bloody.</em></div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="869642783756025877" id="message-869642783756025877" title="Message sent: 27-Jul-21 02:09 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;You try and figure it out.&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/b3e204937e334ad859bcea03bdea7721-CDD3B.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Inultes Fouvate#0000" data-user-id="869619680669732934" style="">Inultes Fouvate</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">27-Jul-21 02:12 PM</span>
+
+            <div class="chatlog__message " data-message-id="869643397844062258" id="message-869643397844062258" title="Message sent: 27-Jul-21 02:12 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>Inultes turns white at the sight, whiter than even his usual pale ass is.</em> &quot;N-No. <strong>NO!</strong> I-I wouldn&#39;t hurt t-them! I w-wouldn&#39;t!&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/cb1a7444d1258f4a15c878bc34ca1178-CC1C8.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Monokuma#0000" data-user-id="869619680669732934" style="">Monokuma</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">27-Jul-21 02:14 PM</span>
+
+            <div class="chatlog__message " data-message-id="869643860349952100" id="message-869643860349952100" title="Message sent: 27-Jul-21 02:14 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Only time will tell...&quot; <em>Monokuma laughed.</em> 
+
+<em>The scene changed again to show Sayaka standing in front of Inultes.</em></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/b3e204937e334ad859bcea03bdea7721-CDD3B.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Inultes Fouvate#0000" data-user-id="869619680669732934" style="">Inultes Fouvate</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">27-Jul-21 02:15 PM</span>
+
+            <div class="chatlog__message " data-message-id="869644160259477504" id="message-869644160259477504" title="Message sent: 27-Jul-21 02:15 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>Inultes jumps slightly at Sayaka suddenly appearing in front of him, though seems a bit relieved to see her.</em> &quot;S-Sayaka? Did M-Monokuma also bring y-you in here?&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/1695350fa348813e1c2b1694b0971eb2-6D88A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="ImReallyScrewed#8206" data-user-id="578326021443420160" style="color: rgb(211,36,36)">Brilliance is fleeting.</span>
+
+
+        <span class="chatlog__timestamp">27-Jul-21 02:15 PM</span>
+
+            <div class="chatlog__message " data-message-id="869644250747392001" id="message-869644250747392001" title="Message sent: 27-Jul-21 02:15 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(sonic i hope you&#39;re watching</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="869644263577763871" id="message-869644263577763871" title="Message sent: 27-Jul-21 02:15 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(this is when i peak</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="869644334549598208" id="message-869644334549598208" title="Message sent: 27-Jul-21 02:16 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(i am destined with glorious purpose</span>
+
+                        </div>
+                    </div>
+
+
+
+                    <div class="chatlog__reactions">
+                            <div class="chatlog__reaction" title="Fukt">
+                                <img class="emoji emoji--small" alt="Fukt" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/755497698563457024-D9F52.png" loading="lazy">
+                                <span class="chatlog__reaction-count">2</span>
+                            </div>
+                    </div>
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/a_014b2e98ab0b46fa868fb6c74efa7c98-3EC09.gif" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="PandaPrince#0321" data-user-id="339972906693951489" style="color: rgb(255,94,0)">Inultes Fouvate | Panda</span>
+
+
+        <span class="chatlog__timestamp">27-Jul-21 02:16 PM</span>
+
+            <div class="chatlog__message " data-message-id="869644344649465906" id="message-869644344649465906" title="Message sent: 27-Jul-21 02:16 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">((it better be otherwise ima be disappointed</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/1695350fa348813e1c2b1694b0971eb2-6D88A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="ImReallyScrewed#8206" data-user-id="578326021443420160" style="color: rgb(211,36,36)">Brilliance is fleeting.</span>
+
+
+        <span class="chatlog__timestamp">27-Jul-21 02:17 PM</span>
+
+            <div class="chatlog__message " data-message-id="869644757117329419" id="message-869644757117329419" title="Message sent: 27-Jul-21 02:17 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(this is perfect</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="869645527808098445" id="message-869645527808098445" title="Message sent: 27-Jul-21 02:20 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="quote"><em>Sayaka... She looks up suddenly at Inultes with rigid determination and grabs his arm. She attacks Inultes and elbows the arm.</em></div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/73112056b6752a66d3cad795c4e915ab-A1CEC.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="CronchyTurtle#8008" data-user-id="486181655837671425" style="color: rgb(255,177,108)">Cronchy-Kun | Yuko Aikawa</span>
+
+
+        <span class="chatlog__timestamp">27-Jul-21 02:27 PM</span>
+
+            <div class="chatlog__message " data-message-id="869647241323892757" id="message-869647241323892757" title="Message sent: 27-Jul-21 02:27 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(this is so beautiful ngl</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/b3e204937e334ad859bcea03bdea7721-CDD3B.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Inultes Fouvate#0000" data-user-id="869619680669732934" style="">Inultes Fouvate</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">27-Jul-21 02:29 PM</span>
+
+            <div class="chatlog__message " data-message-id="869647641020100620" id="message-869647641020100620" title="Message sent: 27-Jul-21 02:29 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>Inultes flinches at the pain, surprised by the sudden attack as he tries to pull away from Sayaka and take a few steps back.</em> &quot;S-Sayaka? W-What&#39;s wrong? Why d-did y- Wait, Monokuma! What h-have you done t-to Sayaka!&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/cb1a7444d1258f4a15c878bc34ca1178-CC1C8.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Monokuma#0000" data-user-id="869619680669732934" style="">Monokuma</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">27-Jul-21 02:30 PM</span>
+
+            <div class="chatlog__message " data-message-id="869647866187112538" id="message-869647866187112538" title="Message sent: 27-Jul-21 02:30 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Puhuhuhu~! I didn&#39;t do a̴̾́n̸̈̊y̶̋͠ṫ̴̓h̸̀̀i̸͒͂ň̵̆g̸̈́̏ ̵̤̕a̵͂̈t̸͗̓ ̸̌̎â̵̕l̶͒̉ľ̴͋.&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/1695350fa348813e1c2b1694b0971eb2-6D88A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="ImReallyScrewed#8206" data-user-id="578326021443420160" style="color: rgb(211,36,36)">Brilliance is fleeting.</span>
+
+
+        <span class="chatlog__timestamp">27-Jul-21 02:32 PM</span>
+
+            <div class="chatlog__message " data-message-id="869648414114205848" id="message-869648414114205848" title="Message sent: 27-Jul-21 02:32 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="quote"><em>Seeing Inultes step back, Sayaka stepped back too, but still stared at Inultes.</em></div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/b3e204937e334ad859bcea03bdea7721-CDD3B.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Inultes Fouvate#0000" data-user-id="869619680669732934" style="">Inultes Fouvate</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">27-Jul-21 02:34 PM</span>
+
+            <div class="chatlog__message " data-message-id="869648839387267192" id="message-869648839387267192" title="Message sent: 27-Jul-21 02:34 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>Inultes focuses his attention back at Sayaka, offering out his uninjured arm towards her.</em> &quot;S-Sayaka...Its m-me, Inultes! Please...&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/483f32491afc1d1ef25af9ce9744f961-8ED08.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Astrea#7171" data-user-id="229350299909881876" style="color: rgb(154,144,231)">Astrea Senpai | Goddess of Stars</span>
+
+
+        <span class="chatlog__timestamp">27-Jul-21 02:39 PM</span>
+
+            <div class="chatlog__message " data-message-id="869650208198381599" id="message-869650208198381599" title="Message sent: 27-Jul-21 02:39 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(i had to do something but—
+(this is brilliant</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/a_014b2e98ab0b46fa868fb6c74efa7c98-3EC09.gif" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="PandaPrince#0321" data-user-id="339972906693951489" style="color: rgb(255,94,0)">Inultes Fouvate | Panda</span>
+
+
+        <span class="chatlog__timestamp">27-Jul-21 02:41 PM</span>
+
+            <div class="chatlog__message " data-message-id="869650623564496917" id="message-869650623564496917" title="Message sent: 27-Jul-21 02:41 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">((it is, tho it can be better</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="869650645437788180" id="message-869650645437788180" title="Message sent: 27-Jul-21 02:41 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">((give inultes emotional injuries</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/1695350fa348813e1c2b1694b0971eb2-6D88A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="ImReallyScrewed#8206" data-user-id="578326021443420160" style="color: rgb(211,36,36)">Brilliance is fleeting.</span>
+
+
+        <span class="chatlog__timestamp">27-Jul-21 02:41 PM</span>
+
+            <div class="chatlog__message " data-message-id="869650768729362523" id="message-869650768729362523" title="Message sent: 27-Jul-21 02:41 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(no you don&#39;t understand panda</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="869650894856273930" id="message-869650894856273930" title="Message sent: 27-Jul-21 02:42 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="quote"><em>Sayaka flinches and braces up, holding her arms up in the air. She seems to be scowling.</em></div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/a_014b2e98ab0b46fa868fb6c74efa7c98-3EC09.gif" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="PandaPrince#0321" data-user-id="339972906693951489" style="color: rgb(255,94,0)">Inultes Fouvate | Panda</span>
+
+
+        <span class="chatlog__timestamp">27-Jul-21 02:42 PM</span>
+
+            <div class="chatlog__message " data-message-id="869651031657685054" id="message-869651031657685054" title="Message sent: 27-Jul-21 02:42 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><img loading="lazy" class="emoji emoji--large" alt="catpog" title="catpog" src="https://cdn.discordapp.com/emojis/850173431025762335.png"></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="869651042848108584" id="message-869651042848108584" title="Message sent: 27-Jul-21 02:42 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">((now i see</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/1695350fa348813e1c2b1694b0971eb2-6D88A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="ImReallyScrewed#8206" data-user-id="578326021443420160" style="color: rgb(211,36,36)">Brilliance is fleeting.</span>
+
+
+        <span class="chatlog__timestamp">27-Jul-21 02:43 PM</span>
+
+            <div class="chatlog__message " data-message-id="869651105682964510" id="message-869651105682964510" title="Message sent: 27-Jul-21 02:43 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(not like</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="869651133826756721" id="message-869651133826756721" title="Message sent: 27-Jul-21 02:43 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(&quot;im being arrested&quot; arms in air</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="869651197076865094" id="message-869651197076865094" title="Message sent: 27-Jul-21 02:43 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(like protecting herself abt to charge at you like a football player arms in air</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/a_014b2e98ab0b46fa868fb6c74efa7c98-3EC09.gif" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="PandaPrince#0321" data-user-id="339972906693951489" style="color: rgb(255,94,0)">Inultes Fouvate | Panda</span>
+
+
+        <span class="chatlog__timestamp">27-Jul-21 02:43 PM</span>
+
+            <div class="chatlog__message " data-message-id="869651212528656506" id="message-869651212528656506" title="Message sent: 27-Jul-21 02:43 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">((boxers stance</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/1695350fa348813e1c2b1694b0971eb2-6D88A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="ImReallyScrewed#8206" data-user-id="578326021443420160" style="color: rgb(211,36,36)">Brilliance is fleeting.</span>
+
+
+        <span class="chatlog__timestamp">27-Jul-21 02:43 PM</span>
+
+            <div class="chatlog__message " data-message-id="869651273471913984" id="message-869651273471913984" title="Message sent: 27-Jul-21 02:43 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(sure</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/b3e204937e334ad859bcea03bdea7721-CDD3B.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Inultes Fouvate#0000" data-user-id="869619680669732934" style="">Inultes Fouvate</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">27-Jul-21 02:45 PM</span>
+
+            <div class="chatlog__message " data-message-id="869651664846618625" id="message-869651664846618625" title="Message sent: 27-Jul-21 02:45 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>Inultes freezes, seeing her scowl at him. There was clear sadness in his face as a part of him realizes why she&#39;s scowling at him, though he doesn&#39;t want to believe it.</em> &quot;S-Sayaka...Its just m-me, please... I&#39;m n-not in Cageless <s>fuck cage <img loading="lazy" class="emoji " alt="Fukt" title="Fukt" src="https://cdn.discordapp.com/emojis/755497698563457024.png"> </s>, Nyarlathotep i-isn&#39;t in control...Please S-Sayaka...&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/1695350fa348813e1c2b1694b0971eb2-6D88A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="ImReallyScrewed#8206" data-user-id="578326021443420160" style="color: rgb(211,36,36)">Brilliance is fleeting.</span>
+
+
+        <span class="chatlog__timestamp">27-Jul-21 02:52 PM</span>
+
+            <div class="chatlog__message " data-message-id="869653522084401232" id="message-869653522084401232" title="Message sent: 27-Jul-21 02:52 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="quote"><em>Out of nowhere, Sayaka snaps into place and charges at Inultes. She tackles him.</em></div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/b3e204937e334ad859bcea03bdea7721-CDD3B.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Inultes Fouvate#0000" data-user-id="869619680669732934" style="">Inultes Fouvate</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">27-Jul-21 02:55 PM</span>
+
+            <div class="chatlog__message " data-message-id="869654305043517530" id="message-869654305043517530" title="Message sent: 27-Jul-21 02:55 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>Inultes, still frozen in place, takes the tackle head on though tries to keep himself standing as he just looks down at Sayaka. It definitely did something, since he&#39;s struggling to breathe slightly now.</em> &quot;S-Sayaka! Please...C-Calm down, i-its me! Its I-Inultes! Please...&quot; <em>Tears start to sting at his eyes.</em></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/1695350fa348813e1c2b1694b0971eb2-6D88A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="ImReallyScrewed#8206" data-user-id="578326021443420160" style="color: rgb(211,36,36)">Brilliance is fleeting.</span>
+
+
+        <span class="chatlog__timestamp">27-Jul-21 02:57 PM</span>
+
+            <div class="chatlog__message " data-message-id="869654716970324076" id="message-869654716970324076" title="Message sent: 27-Jul-21 02:57 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="quote"><em>Sayaka starts punching and clawing at Inultes. If you don&#39;t do something, she&#39;ll probably cause some serious damage.</em></div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/b3e204937e334ad859bcea03bdea7721-CDD3B.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Inultes Fouvate#0000" data-user-id="869619680669732934" style="">Inultes Fouvate</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">27-Jul-21 03:00 PM</span>
+
+            <div class="chatlog__message " data-message-id="869655554845466654" id="message-869655554845466654" title="Message sent: 27-Jul-21 03:00 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>Inultes quickly pushes Sayaka away from himself, backing away a bit as he examines his wounds for a moment. Some of them are bleeding, a bit of bruising. Nothing he&#39;s never had before. He looks back up at Sayaka.</em> &quot;S-Sayaka...Monokuma! What have you d-done to h-her! Why is she a-attacking me!?&quot; <em>Tears start to fall from Inultes&#39; eyes, hoping that maybe Monokuma did something this time too.</em></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/cb1a7444d1258f4a15c878bc34ca1178-CC1C8.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Monokuma#0000" data-user-id="869619680669732934" style="">Monokuma</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">27-Jul-21 03:04 PM</span>
+
+            <div class="chatlog__message " data-message-id="869656389688115281" id="message-869656389688115281" title="Message sent: 27-Jul-21 03:04 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Huh? Like I said, I&#39;m not doing anything. Well, uh, I&#39;m not doing too much.&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/1695350fa348813e1c2b1694b0971eb2-6D88A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="ImReallyScrewed#8206" data-user-id="578326021443420160" style="color: rgb(211,36,36)">Brilliance is fleeting.</span>
+
+
+        <span class="chatlog__timestamp">27-Jul-21 03:04 PM</span>
+
+            <div class="chatlog__message " data-message-id="869656541463183421" id="message-869656541463183421" title="Message sent: 27-Jul-21 03:04 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="quote"><em>Sayaka charges at Inultes, kicking at Inultes&#39; stomach.</em></div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/b3e204937e334ad859bcea03bdea7721-CDD3B.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Inultes Fouvate#0000" data-user-id="869619680669732934" style="">Inultes Fouvate</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">27-Jul-21 03:16 PM</span>
+
+            <div class="chatlog__message " data-message-id="869659630287069274" id="message-869659630287069274" title="Message sent: 27-Jul-21 03:16 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>Inultes dodges the kick this time, eyes focused on Sayaka though also looking for Monokuma. He snarls, tears falling down his eyes as he yells out towards Monokuma, almost like a roar.</em> &quot;T-TELL ME WHAT YOU&#39;VE D-DONE YOU TO HER Y-YOU FUCKING BEAR!&quot;</span>
+
+                                <span class="chatlog__edited-timestamp" title="27-Jul-21 03:17 PM">(edited)</span>
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/cb1a7444d1258f4a15c878bc34ca1178-CC1C8.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Monokuma#0000" data-user-id="869619680669732934" style="">Monokuma</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">27-Jul-21 03:18 PM</span>
+
+            <div class="chatlog__message " data-message-id="869660009460547654" id="message-869660009460547654" title="Message sent: 27-Jul-21 03:18 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Puhuhuhu~! I think that&#39;s enough now.&quot; <em>The Sayaka seems to crumble before Inultes.</em></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/b3e204937e334ad859bcea03bdea7721-CDD3B.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Inultes Fouvate#0000" data-user-id="869619680669732934" style="">Inultes Fouvate</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">27-Jul-21 03:23 PM</span>
+
+            <div class="chatlog__message " data-message-id="869661362584948808" id="message-869661362584948808" title="Message sent: 27-Jul-21 03:23 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>Inultes stares at Sayaka, his snarl replaced with a look of fear as he immediately rushes over to Sayaka&#39;s side, kneeling down next to her as he seems hesitant to touch her.</em> &quot;S-Sayaka! Please b-be okay, please... I-I don&#39;t want you t-to die, please don&#39;t d-die... Please...&quot; <em>He&#39;s shaking, tears now falling heavier than before.</em></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/1695350fa348813e1c2b1694b0971eb2-6D88A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="ImReallyScrewed#8206" data-user-id="578326021443420160" style="color: rgb(211,36,36)">Brilliance is fleeting.</span>
+
+
+        <span class="chatlog__timestamp">27-Jul-21 03:24 PM</span>
+
+            <div class="chatlog__message " data-message-id="869661536069750876" id="message-869661536069750876" title="Message sent: 27-Jul-21 03:24 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="quote"><em>Her breathing destabilizes and isn&#39;t normal. Sayaka doesn&#39;t seem to be OK.</em></div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/b3e204937e334ad859bcea03bdea7721-CDD3B.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Inultes Fouvate#0000" data-user-id="869619680669732934" style="">Inultes Fouvate</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">27-Jul-21 03:28 PM</span>
+
+            <div class="chatlog__message " data-message-id="869662474247475241" id="message-869662474247475241" title="Message sent: 27-Jul-21 03:28 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>Inultes realizes this but doesn&#39;t know what to do, other than cry that is as he holds a dying Sayaka in his arms.</em> &quot;S-Sayaka please... P-Please...don&#39;t d-die...Don&#39;t l-leave us...D-Don&#39;t leave m-me...Please...&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/1695350fa348813e1c2b1694b0971eb2-6D88A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="ImReallyScrewed#8206" data-user-id="578326021443420160" style="color: rgb(211,36,36)">Brilliance is fleeting.</span>
+
+
+        <span class="chatlog__timestamp">27-Jul-21 03:34 PM</span>
+
+            <div class="chatlog__message " data-message-id="869664167693520956" id="message-869664167693520956" title="Message sent: 27-Jul-21 03:34 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="quote"><em>There isn&#39;t a way to save her.</em></div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/a_014b2e98ab0b46fa868fb6c74efa7c98-3EC09.gif" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="PandaPrince#0321" data-user-id="339972906693951489" style="color: rgb(255,94,0)">Inultes Fouvate | Panda</span>
+
+
+        <span class="chatlog__timestamp">27-Jul-21 03:39 PM</span>
+
+            <div class="chatlog__message " data-message-id="869665244438487040" id="message-869665244438487040" title="Message sent: 27-Jul-21 03:39 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">((kev do you want serotonin?</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/1695350fa348813e1c2b1694b0971eb2-6D88A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="ImReallyScrewed#8206" data-user-id="578326021443420160" style="color: rgb(211,36,36)">Brilliance is fleeting.</span>
+
+
+        <span class="chatlog__timestamp">27-Jul-21 03:39 PM</span>
+
+            <div class="chatlog__message " data-message-id="869665274259968010" id="message-869665274259968010" title="Message sent: 27-Jul-21 03:39 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(yes</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="869665309320163329" id="message-869665309320163329" title="Message sent: 27-Jul-21 03:39 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(panda wait</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="869665318807670805" id="message-869665318807670805" title="Message sent: 27-Jul-21 03:39 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(if you&#39;re</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="869665326101581896" id="message-869665326101581896" title="Message sent: 27-Jul-21 03:39 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(no wait</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/a_014b2e98ab0b46fa868fb6c74efa7c98-3EC09.gif" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="PandaPrince#0321" data-user-id="339972906693951489" style="color: rgb(255,94,0)">Inultes Fouvate | Panda</span>
+
+
+        <span class="chatlog__timestamp">27-Jul-21 03:39 PM</span>
+
+            <div class="chatlog__message " data-message-id="869665341440159865" id="message-869665341440159865" title="Message sent: 27-Jul-21 03:39 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">((=)</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/1695350fa348813e1c2b1694b0971eb2-6D88A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="ImReallyScrewed#8206" data-user-id="578326021443420160" style="color: rgb(211,36,36)">Brilliance is fleeting.</span>
+
+
+        <span class="chatlog__timestamp">27-Jul-21 03:39 PM</span>
+
+            <div class="chatlog__message " data-message-id="869665346548818020" id="message-869665346548818020" title="Message sent: 27-Jul-21 03:39 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(i can&#39;t handle this physically if you do</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/a_014b2e98ab0b46fa868fb6c74efa7c98-3EC09.gif" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="PandaPrince#0321" data-user-id="339972906693951489" style="color: rgb(255,94,0)">Inultes Fouvate | Panda</span>
+
+
+        <span class="chatlog__timestamp">27-Jul-21 03:39 PM</span>
+
+            <div class="chatlog__message " data-message-id="869665367067340840" id="message-869665367067340840" title="Message sent: 27-Jul-21 03:39 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">((good, die.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/b3e204937e334ad859bcea03bdea7721-CDD3B.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Inultes Fouvate#0000" data-user-id="869619680669732934" style="">Inultes Fouvate</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">27-Jul-21 03:39 PM</span>
+
+            <div class="chatlog__message " data-message-id="869665377343385631" id="message-869665377343385631" title="Message sent: 27-Jul-21 03:39 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>Well good to know, though Inultes can&#39;t save her anyways cuz he doesn&#39;t know how to do basic cpr<img loading="lazy" class="emoji " alt="Fukt" title="Fukt" src="https://cdn.discordapp.com/emojis/755497698563457024.png"> .</em> &quot;Please S-Sayaka... I-I...&quot; <em>Inultes pauses for a moment, breathing getting shaky as he mutters something out.</em> &quot;*I-I...I love y-you...Please...&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+                    <div class="chatlog__reactions">
+                            <div class="chatlog__reaction" title="eyes">
+                                <img class="emoji emoji--small" alt="&#128064;" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/1f440-31786.svg" loading="lazy">
+                                <span class="chatlog__reaction-count">5</span>
+                            </div>
+                    </div>
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/483f32491afc1d1ef25af9ce9744f961-8ED08.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Astrea#7171" data-user-id="229350299909881876" style="color: rgb(154,144,231)">Astrea Senpai | Goddess of Stars</span>
+
+
+        <span class="chatlog__timestamp">27-Jul-21 03:40 PM</span>
+
+            <div class="chatlog__message " data-message-id="869665522537623612" id="message-869665522537623612" title="Message sent: 27-Jul-21 03:40 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(kev can i do this next part</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="869665545937637408" id="message-869665545937637408" title="Message sent: 27-Jul-21 03:40 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(want to add a little flavor</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/1695350fa348813e1c2b1694b0971eb2-6D88A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="ImReallyScrewed#8206" data-user-id="578326021443420160" style="color: rgb(211,36,36)">Brilliance is fleeting.</span>
+
+
+        <span class="chatlog__timestamp">27-Jul-21 03:40 PM</span>
+
+            <div class="chatlog__message " data-message-id="869665547460169748" id="message-869665547460169748" title="Message sent: 27-Jul-21 03:40 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(y--yes</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="869665558856089611" id="message-869665558856089611" title="Message sent: 27-Jul-21 03:40 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(i can&#39;t types ijak</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="869665566019964978" id="message-869665566019964978" title="Message sent: 27-Jul-21 03:40 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(hiaeoj</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/a_014b2e98ab0b46fa868fb6c74efa7c98-3EC09.gif" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="PandaPrince#0321" data-user-id="339972906693951489" style="color: rgb(255,94,0)">Inultes Fouvate | Panda</span>
+
+
+        <span class="chatlog__timestamp">27-Jul-21 03:42 PM</span>
+
+            <div class="chatlog__message " data-message-id="869666029217919016" id="message-869666029217919016" title="Message sent: 27-Jul-21 03:42 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">((kev really did peak this motive</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/fe15d67c37b4ce3484bfa134caff1534-23FB5.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="???#0000" data-user-id="869619680669732934" style="">???</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">27-Jul-21 03:43 PM</span>
+
+            <div class="chatlog__message " data-message-id="869666266875564062" id="message-869666266875564062" title="Message sent: 27-Jul-21 03:43 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">It&#39;s of no use.
+
+Inultes could feel the life draining out of her. It&#39;s funny how fragile humans can be, especially at their lowest points. They think they&#39;re so strong, that they can handle anything, but...
+
+Sayaka, somehow, attempted to extend her hand out to Inultes, but...
+Sayaka&#39;s eyes opened wide. Her body collapsed, with her hand falling down.
+
+Sayaka was dead.
+
+That lasted for what feels like an eternity, before...</span>
+
+                                <span class="chatlog__edited-timestamp" title="27-Jul-21 03:45 PM">(edited)</span>
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/fbe8dcb886bdb801aaef342f91488cfb-06CD8.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Monokuma#0000" data-user-id="869619680669732934" style="">Monokuma</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">27-Jul-21 03:43 PM</span>
+
+            <div class="chatlog__message " data-message-id="869666318276767754" id="message-869666318276767754" title="Message sent: 27-Jul-21 03:43 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Ok! That&#39;s a wrap people!&quot; <em>Sayaka fades away.</em></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/a_014b2e98ab0b46fa868fb6c74efa7c98-3EC09.gif" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="PandaPrince#0321" data-user-id="339972906693951489" style="color: rgb(255,94,0)">Inultes Fouvate | Panda</span>
+
+
+        <span class="chatlog__timestamp">27-Jul-21 03:45 PM</span>
+
+            <div class="chatlog__message " data-message-id="869666851720925237" id="message-869666851720925237" title="Message sent: 27-Jul-21 03:45 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">((dollar store monokuma pfp <img loading="lazy" class="emoji " alt="Lmao" title="Lmao" src="https://cdn.discordapp.com/emojis/834893036633981008.gif"></span>
+
+                        </div>
+                    </div>
+
+
+
+                    <div class="chatlog__reactions">
+                            <div class="chatlog__reaction" title="Fukt">
+                                <img class="emoji emoji--small" alt="Fukt" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/786629592814321685-315EF.png" loading="lazy">
+                                <span class="chatlog__reaction-count">4</span>
+                            </div>
+                    </div>
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/73112056b6752a66d3cad795c4e915ab-A1CEC.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="CronchyTurtle#8008" data-user-id="486181655837671425" style="color: rgb(255,177,108)">Cronchy-Kun | Yuko Aikawa</span>
+
+
+        <span class="chatlog__timestamp">27-Jul-21 03:47 PM</span>
+
+            <div class="chatlog__message " data-message-id="869667253971464232" id="message-869667253971464232" title="Message sent: 27-Jul-21 03:47 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(that was fun</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/b3e204937e334ad859bcea03bdea7721-CDD3B.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Inultes Fouvate#0000" data-user-id="869619680669732934" style="">Inultes Fouvate</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">27-Jul-21 03:48 PM</span>
+
+            <div class="chatlog__message " data-message-id="869667555512557598" id="message-869667555512557598" title="Message sent: 27-Jul-21 03:48 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>Inultes just stares down at the now gone Sayaka, tears streaming down his face as that animalistic anger seemingly vanish from before...until it reappears once again, once again looking for wherever Monokuma was.</em> &quot;<strong>WHERE A-ARE YOU YOU D-DAMN FUCKING BEAR! I&#39;LL KILL Y-YOU! ILL FUCKING K-KILL YOU!</strong>&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/cb1a7444d1258f4a15c878bc34ca1178-CC1C8.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Monokuma#0000" data-user-id="869619680669732934" style="">Monokuma</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">27-Jul-21 03:48 PM</span>
+
+            <div class="chatlog__message " data-message-id="869667646491201617" id="message-869667646491201617" title="Message sent: 27-Jul-21 03:48 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>The room fades to white around Inultes. For IC purposes, this won&#39;t be happening until right before the motive.</em>
+
+<em>Have fun. :]</em></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/d49f58e6303e3e9e84529d9ca34ce104-C9B50.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ame/Est55#7858" data-user-id="328149026266677248" style="color: rgb(255,235,110)">Sayaka &#128270; Taira / E</span>
+
+
+        <span class="chatlog__timestamp">27-Jul-21 03:53 PM</span>
+
+            <div class="chatlog__message " data-message-id="869668770480812094" id="message-869668770480812094" title="Message sent: 27-Jul-21 03:53 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(WHAT THE F*CK.)</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+            <div class="chatlog__message " data-message-id="869669036907196507" id="message-869669036907196507" title="Message sent: 27-Jul-21 03:54 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(WEKWLDNWKDNW)</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/b3e204937e334ad859bcea03bdea7721-CDD3B.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Inultes Fouvate#0000" data-user-id="869619680669732934" style="">Inultes Fouvate</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">27-Jul-21 04:02 PM</span>
+
+            <div class="chatlog__message " data-message-id="869671138446422086" id="message-869671138446422086" title="Message sent: 27-Jul-21 04:02 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>Inultes&#39; anger slightly lessens, though the animalistic snarling and tears don&#39;t stop as he looks around still confused by all thats just happened. He looks around, more than a little confused but angry. Still, he doesn&#39;t care about the room right now. He wants to find Monokuma, and he&#39;s making sure Monokuma knows that.</em> &quot;<strong>COME O-OUT HERE M-MONOKUMA! I&#39;LL T-TEAR OUT YOUR I-INSIDE ONCE I FIND Y-YOU!</strong>&quot;</span>
+
+                                <span class="chatlog__edited-timestamp" title="27-Jul-21 04:12 PM">(edited)</span>
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20inultes-sim%20%5B869414034758320208%5D.html_Files/640cd2526a889f3a1ecaadae62311a58-03328.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Despair&#39;s Horizon Bot#8265" data-user-id="861082089231482880" style="color: rgb(255,0,0)">Despair&#39;s Horizon Bot</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">28-Jul-21 12:27 PM</span>
+
+            <div class="chatlog__message " data-message-id="869979265809137744" id="message-869979265809137744" title="Message sent: 28-Jul-21 12:27 PM">
+
+
+                        <div class="chatlog__embed">
+                                <div class="chatlog__embed-color-pill" style="background-color: rgba(217,44,67,255)"></div>
+
+                            <div class="chatlog__embed-content-container">
+                                <div class="chatlog__embed-content">
+                                    <div class="chatlog__embed-text">
+
+
+                                            <div class="chatlog__embed-description">
+                                                <div class="markdown preserve-whitespace"><span class="mention" title="PandaPrince#0321">@Inultes Fouvate | Panda</span> got an interaction!</div>
+                                            </div>
+
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+
+            </div>
+    </div>
+</div>
+
+
+</div>
+
+<div class="postamble">
+    <div class="postamble__entry">Exported 109 message(s)</div>
+</div>
+
+</body>
+
+</html>

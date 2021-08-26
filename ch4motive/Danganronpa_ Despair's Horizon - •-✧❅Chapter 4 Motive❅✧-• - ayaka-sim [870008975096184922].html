@@ -1,0 +1,1871 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Danganronpa: Despair&#39;s Horizon - ayaka-sim</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width">
+
+    <style>
+        @font-face {
+            font-family: Whitney;
+            src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-300.woff);
+            font-weight: 300;
+        }
+
+        @font-face {
+            font-family: Whitney;
+            src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-400.woff);
+            font-weight: 400;
+        }
+
+        @font-face {
+            font-family: Whitney;
+            src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-500.woff);
+            font-weight: 500;
+        }
+
+        @font-face {
+            font-family: Whitney;
+            src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-600.woff);
+            font-weight: 600;
+        }
+
+        @font-face {
+            font-family: Whitney;
+            src: url(https://cdn.jsdelivr.net/gh/Tyrrrz/DiscordFonts@master/whitney-700.woff);
+            font-weight: 700;
+        }
+
+        body {
+            background-color: #36393e;
+            color: #dcddde;
+            font-family: "Whitney", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 17px;
+            font-weight: 400;
+        }
+
+        a {
+            color: #00aff4;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        img {
+            object-fit: contain;
+        }
+
+        .markdown {
+            max-width: 100%;
+            line-height: 1.3;
+            overflow-wrap: break-word;
+        }
+
+        .preserve-whitespace {
+            white-space: pre-wrap;
+        }
+
+        .spoiler-text {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 3px;
+        }
+
+        .spoiler-text--hidden {
+            cursor: pointer;
+            background-color: #202225;
+            color: rgba(0, 0, 0, 0);
+        }
+
+        .spoiler-text--hidden:hover {
+            background-color: rgba(32, 34, 37, 0.8);
+        }
+
+        .spoiler-text--hidden::selection {
+            color: rgba(0, 0, 0, 0);
+        }
+
+        .quote {
+            display: flex;
+            margin: 0.05em 0;
+        }
+
+        .quote::before {
+            content: "";
+            margin-right: 0.5em;
+            border: 2px solid #4f545c;
+            border-radius: 3px;
+        }
+
+        .pre {
+            background-color: #2f3136;
+            font-family: "Consolas", "Courier New", Courier, monospace;
+        }
+
+        .pre--multiline {
+            margin-top: 0.25em;
+            padding: 0.5em;
+            border: 2px solid #282b30;
+            border-radius: 5px;
+            color: #b9bbbe;
+        }
+
+        .pre--multiline.hljs {
+            background-color: #2f3136;
+            color: #b9bbbe;
+        }
+
+        .pre--inline {
+            padding: 2px;
+            border-radius: 3px;
+            font-size: 0.85em;
+        }
+
+        .mention {
+            border-radius: 3px;
+            padding: 0 2px;
+            color: #7289da;
+            background-color: rgba(114, 137, 218, .1);
+            font-weight: 500;
+        }
+
+        .timestamp {
+            border-radius: 3px;
+            padding: 0 2px;
+            background-color: rgba(255, 255, 255, 0.06);
+        }
+
+        .emoji {
+            width: 1.325em;
+            height: 1.325em;
+            margin: 0 0.06em;
+            vertical-align: -0.4em;
+        }
+
+        .emoji--small {
+            width: 1em;
+            height: 1em;
+        }
+
+        .emoji--large {
+            width: 2.8em;
+            height: 2.8em;
+        }
+
+        .preamble {
+            display: grid;
+            margin: 0 0.3em 0.6em 0.3em;
+            max-width: 100%;
+            grid-template-columns: auto 1fr;
+        }
+
+        .preamble__guild-icon-container {
+            grid-column: 1;
+        }
+
+        .preamble__guild-icon {
+            max-width: 88px;
+            max-height: 88px;
+        }
+
+        .preamble__entries-container {
+            grid-column: 2;
+            margin-left: 0.6em;
+        }
+
+        .preamble__entry {
+            font-size: 1.4em;
+            color: #ffffff;
+        }
+
+        .preamble__entry--small {
+            font-size: 1em;
+        }
+
+        .chatlog {
+            max-width: 100%;
+        }
+
+        .chatlog__message-group {
+            display: grid;
+            margin: 0 0.6em;
+            padding: 0.9em 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            grid-template-columns: auto 1fr;
+        }
+
+        .chatlog__reference-symbol {
+            grid-column: 1;
+            margin: 8px 4px 4px 18px;
+            border-left: 2px solid #4f545c;
+            border-top: 2px solid #4f545c;
+            border-radius: 8px 0 0 0;
+        }
+
+        .chatlog__reference {
+            display: flex;
+            grid-column: 2;
+            margin-bottom: 0.25em;
+            font-size: 0.875em;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            align-items: center;
+            color: #b5b6b8;
+        }
+
+        .chatlog__reference-avatar {
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            margin-right: 0.25em;
+        }
+
+        .chatlog__reference-name {
+            margin-right: 0.3em;
+            font-weight: 600;
+        }
+
+        .chatlog__reference-content {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .chatlog__reference-content a:hover {
+            text-decoration: none;
+        }
+
+        .chatlog__reference-link {
+            cursor: pointer;
+            color: #b5b6b8;
+        }
+
+        .chatlog__reference-link * {
+            display: inline;
+            pointer-events: none;
+        }
+
+        .chatlog__reference-link:hover {
+            color: #ffffff;
+        }
+
+        .chatlog__reference-link:hover *:not(.spoiler-text) {
+            color: #ffffff;
+        }
+
+        .chatlog__reference-edited-timestamp {
+            margin-left: 0.25em;
+            font-size: 0.8em;
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        .chatlog__author-avatar-container {
+            grid-column: 1;
+            width: 40px;
+            height: 40px;
+            margin-right: 16px;
+        }
+
+        .chatlog__author-avatar {
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+        }
+
+        .chatlog__messages {
+            grid-column: 2;
+            min-width: 50%;
+        }
+
+        .chatlog__author-name {
+            font-weight: 500;
+            color: #ffffff;
+        }
+
+        .chatlog__timestamp {
+            margin-left: 0.3em;
+            font-size: 0.75em;
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        .chatlog__message {
+            padding: 0.1em 0.3em;
+            margin: 0 -0.3em;
+            background-color: transparent;
+            transition: background-color 1s ease;
+        }
+
+        .chatlog__message--highlighted {
+            background-color: rgba(114, 137, 218, 0.2);
+        }
+
+        .chatlog__message--pinned {
+            background-color: rgba(249, 168, 37, 0.05);
+        }
+
+        .chatlog__content {
+            font-size: 0.95em;
+            word-wrap: break-word;
+        }
+
+        .chatlog__edited-timestamp {
+            margin-left: 0.15em;
+            font-size: 0.8em;
+        }
+
+        .chatlog__attachment {
+            display: inline-block;
+            position: relative;
+            margin-top: 0.3em;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .chatlog__attachment--hidden {
+            cursor: pointer;
+            box-shadow: 0 0 1px 1px rgba(0, 0, 0, 0.1);
+        }
+
+        .chatlog__attachment--hidden * {
+            pointer-events: none;
+        }
+
+        .chatlog__attachment-spoiler-caption {
+            display: none;
+            z-index: 999;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            padding: 0.4em 0.8em;
+            background-color: rgba(0, 0, 0, 0.9);
+            border-radius: 20px;
+            color: #dcddde;
+            font-size: 0.9em;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+
+        .chatlog__attachment--hidden .chatlog__attachment-spoiler-caption {
+            display: block;
+        }
+
+        .chatlog__attachment--hidden:hover .chatlog__attachment-spoiler-caption {
+            color: #fff;
+        }
+
+        .chatlog__attachment-media {
+            vertical-align: top;
+            max-width: 45vw;
+            max-height: 500px;
+            border-radius: 3px;
+        }
+
+        .chatlog__attachment--hidden .chatlog__attachment-media {
+            filter: blur(44px);
+        }
+
+        .chatlog__attachment-generic {
+            width: 100%;
+            max-width: 520px;
+            height: 40px;
+            padding: 10px;
+            background-color: #2f3136;
+            border: 1px solid #292b2f;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .chatlog__attachment--hidden .chatlog__attachment-generic {
+            filter: blur(44px);
+        }
+
+        .chatlog__attachment-generic-icon {
+            float: left;
+            width: 30px;
+            height: 100%;
+            margin-right: 10px;
+        }
+
+        .chatlog__attachment-generic-size {
+            color: #72767d;
+            font-size: 12px;
+        }
+
+        .chatlog__attachment-generic-name {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+        }
+
+        .chatlog__edited-timestamp {
+            color: rgba(255, 255, 255, 0.2);
+        }
+
+        .chatlog__embed {
+            display: flex;
+            margin-top: 0.3em;
+            max-width: 520px;
+        }
+
+        .chatlog__embed-color-pill {
+            flex-shrink: 0;
+            width: 0.25em;
+            border-top-left-radius: 3px;
+            border-bottom-left-radius: 3px;
+        }
+
+        .chatlog__embed-color-pill--default {
+            background-color: #202225;
+        }
+
+        .chatlog__embed-content-container {
+            display: flex;
+            flex-direction: column;
+            padding: 0.5em 0.6em;
+            background-color: rgba(46, 48, 54, 0.3);
+            border: 1px solid rgba(46, 48, 54, 0.6);
+            border-top-right-radius: 3px;
+            border-bottom-right-radius: 3px;
+        }
+
+        .chatlog__embed-content {
+            display: flex;
+            width: 100%;
+        }
+
+        .chatlog__embed-text {
+            flex: 1;
+        }
+
+        .chatlog__embed-author {
+            display: flex;
+            margin-bottom: 0.3em;
+            align-items: center;
+        }
+
+        .chatlog__embed-author-icon {
+            margin-right: 0.5em;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+        }
+
+        .chatlog__embed-author-name {
+            font-size: 0.875em;
+            font-weight: 600;
+            color: #ffffff
+        }
+
+        .chatlog__embed-author-name-link {
+            color: #ffffff;
+        }
+
+        .chatlog__embed-title {
+            margin-bottom: 0.2em;
+            font-size: 0.875em;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .chatlog__embed-description {
+            font-weight: 500;
+            font-size: 0.85em;
+            color: #dcddde;
+        }
+
+        .chatlog__embed-fields {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0 0.5em;
+        }
+
+        .chatlog__embed-field {
+            flex: 0;
+            min-width: 100%;
+            max-width: 506px;
+            padding-top: 0.6em;
+            font-size: 0.875em;
+        }
+
+        .chatlog__embed-field--inline {
+            flex: 1;
+            flex-basis: auto;
+            min-width: 150px;
+        }
+
+        .chatlog__embed-field-name {
+            margin-bottom: 0.2em;
+            font-weight: 600;
+            color: #ffffff;
+        }
+
+        .chatlog__embed-field-value {
+            font-weight: 500;
+            color: #dcddde;
+        }
+
+        .chatlog__embed-thumbnail {
+            flex: 0;
+            margin-left: 1.2em;
+            max-width: 80px;
+            max-height: 80px;
+            border-radius: 3px;
+        }
+
+        .chatlog__embed-image-container {
+            margin-top: 0.6em;
+        }
+
+        .chatlog__embed-image {
+            max-width: 500px;
+            max-height: 400px;
+            border-radius: 3px;
+        }
+
+        .chatlog__embed-footer {
+            margin-top: 0.6em;
+            color: #dcddde;
+        }
+
+        .chatlog__embed-footer-icon {
+            margin-right: 0.2em;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            vertical-align: middle;
+        }
+
+        .chatlog__embed-footer-text {
+            vertical-align: middle;
+            font-size: 0.75em;
+            font-weight: 500;
+        }
+
+        .chatlog__embed-plainimage {
+            vertical-align: top;
+            max-width: 45vw;
+            max-height: 500px;
+            border-radius: 3px;
+        }
+
+        .chatlog__embed-spotify {
+            border: 0;
+        }
+
+        .chatlog__embed-youtube-container {
+            margin-top: 0.6em;
+        }
+
+        .chatlog__embed-youtube {
+            border: 0;
+            border-radius: 3px;
+        }
+
+        .chatlog__reactions {
+            display: flex;
+        }
+
+        .chatlog__reaction {
+            display: flex;
+            align-items: center;
+            margin: 0.35em 0.1em 0.1em 0.1em;
+            padding: 0.2em 0.35em;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 3px;
+        }
+
+        .chatlog__reaction-count {
+            min-width: 9px;
+            margin-left: 0.35em;
+            font-size: 0.875em;
+            color: rgba(255, 255, 255, 0.3);
+        }
+
+        .chatlog__bot-tag {
+            position: relative;
+            top: -.1em;
+            margin-left: 0.3em;
+            padding: 0.05em 0.3em;
+            border-radius: 3px;
+            line-height: 1.3;
+            background-color: #5865F2;
+            color: #ffffff;
+            font-size: 0.625em;
+            font-weight: 500;
+        }
+
+        .postamble {
+            margin: 1.4em 0.3em 0.6em 0.3em;
+            padding: 1em;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .postamble__entry {
+            color: #ffffff;
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/styles/solarized-dark.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.15.6/highlight.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.pre--multiline').forEach(block => hljs.highlightBlock(block));
+        });
+    </script>
+
+    <script>
+        function scrollToMessage(event, id) {
+            var element = document.getElementById('message-' + id);
+
+            if (element) {
+                event.preventDefault();
+
+                element.classList.add('chatlog__message--highlighted');
+
+                window.scrollTo({
+                    top: element.getBoundingClientRect().top - document.body.getBoundingClientRect().top - (window.innerHeight / 2),
+                    behavior: 'smooth'
+                });
+
+                window.setTimeout(function() {
+                    element.classList.remove('chatlog__message--highlighted');
+                }, 2000);
+            }
+        }
+
+        function showSpoiler(event, element) {
+            if (element && element.classList.contains('spoiler-text--hidden')) {
+                event.preventDefault();
+                element.classList.remove('spoiler-text--hidden');
+            }
+            if (element && element.classList.contains('chatlog__attachment--hidden')) {
+                event.preventDefault();
+                element.classList.remove('chatlog__attachment--hidden');
+            }
+        }
+    </script>
+
+    <svg style="display: none">
+        <symbol id="icon-attachment" viewBox="0 0 720 960">
+            <path fill="#f4f5fb" d="M50,935a25,25,0,0,1-25-25V50A25,25,0,0,1,50,25H519.6L695,201.32V910a25,25,0,0,1-25,25Z" />
+            <path fill="#7789c4" d="M509.21,50,670,211.63V910H50V50H509.21M530,0H50A50,50,0,0,0,0,50V910a50,50,0,0,0,50,50H670a50,50,0,0,0,50-50h0V191Z" />
+            <path fill="#f4f5fb" d="M530,215a25,25,0,0,1-25-25V50a25,25,0,0,1,16.23-23.41L693.41,198.77A25,25,0,0,1,670,215Z" />
+            <path fill="#7789c4" d="M530,70.71,649.29,190H530V70.71M530,0a50,50,0,0,0-50,50V190a50,50,0,0,0,50,50H670a50,50,0,0,0,50-50Z" />
+        </symbol>
+    </svg>
+</head>
+<body>
+
+<div class="preamble">
+    <div class="preamble__guild-icon-container">
+        <img class="preamble__guild-icon" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20ayaka-sim%20%5B870008975096184922%5D.html_Files/a_2f7c80d0e7b055c4cf7f616eb37ae513-2180D.png" alt="Guild icon" loading="lazy">
+    </div>
+    <div class="preamble__entries-container">
+        <div class="preamble__entry">Danganronpa: Despair&#39;s Horizon</div>
+        <div class="preamble__entry">•-✧❅Chapter 4 Motive❅✧-• / ayaka-sim</div>
+
+
+    </div>
+</div>
+
+<div class="chatlog">
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20ayaka-sim%20%5B870008975096184922%5D.html_Files/1695350fa348813e1c2b1694b0971eb2-6D88A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="ImReallyScrewed#8206" data-user-id="578326021443420160" style="color: rgb(211,36,36)">Brilliance is fleeting.</span>
+
+
+        <span class="chatlog__timestamp">29-Jul-21 02:47 PM</span>
+
+            <div class="chatlog__message " data-message-id="870376993206710272" id="message-870376993206710272" title="Message sent: 29-Jul-21 02:47 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">( <span class="mention" title="shiny#6669">@gabby | Ayaka Sato &#129360;</span> ready when you are</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20ayaka-sim%20%5B870008975096184922%5D.html_Files/003184a4bfaf95040d8134d1368eece7-EAAC7.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="shiny#6669" data-user-id="284589540553916416" style="color: rgb(255,215,0)">gabby | Ayaka Sato &#129360;</span>
+
+
+        <span class="chatlog__timestamp">29-Jul-21 02:58 PM</span>
+
+            <div class="chatlog__message " data-message-id="870379653469175860" id="message-870379653469175860" title="Message sent: 29-Jul-21 02:58 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(ok hi</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20ayaka-sim%20%5B870008975096184922%5D.html_Files/1695350fa348813e1c2b1694b0971eb2-6D88A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="ImReallyScrewed#8206" data-user-id="578326021443420160" style="color: rgb(211,36,36)">Brilliance is fleeting.</span>
+
+
+        <span class="chatlog__timestamp">29-Jul-21 02:59 PM</span>
+
+            <div class="chatlog__message " data-message-id="870380036216201286" id="message-870380036216201286" title="Message sent: 29-Jul-21 02:59 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="quote"><em>Ayaka wakes up in a pure white dorm, after all of his interactions the night before the motive. It almost feels like a dream, yet you know it&#39;s not since all your senses are working. The room is medium sized, about 15x15 feet.</em>
+</div>&gt; 
+<div class="quote"><em>In the center of the room, there&#39;s two armchairs with a small coffee table. No one&#39;s sitting on either chair, but there are two still warm cups of coffee for Ayaka.</em></div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20ayaka-sim%20%5B870008975096184922%5D.html_Files/5f0b9d64a477f8f4e3322d735ef13956-526D1.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ayaka Sato#0000" data-user-id="870381872759312455" style="">Ayaka Sato</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">29-Jul-21 03:06 PM</span>
+
+            <div class="chatlog__message " data-message-id="870381874088923176" id="message-870381874088923176" title="Message sent: 29-Jul-21 03:06 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">It takes her maybe a moment after she wakes up, but as soon as she realized what was happening… yeah, she started to panic. Just a bit.
+&quot;<em>Fuck</em>. I&#39;m not doing this! Not now-&quot;
+Shaking, she proceeded to kick the table. Yup, coffee and all now everywhere.
+&quot;…I know you&#39;re there. Show yourself, and get me out. Now!&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20ayaka-sim%20%5B870008975096184922%5D.html_Files/1695350fa348813e1c2b1694b0971eb2-6D88A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="ImReallyScrewed#8206" data-user-id="578326021443420160" style="color: rgb(211,36,36)">Brilliance is fleeting.</span>
+
+
+        <span class="chatlog__timestamp">29-Jul-21 03:11 PM</span>
+
+            <div class="chatlog__message " data-message-id="870383070115659777" id="message-870383070115659777" title="Message sent: 29-Jul-21 03:11 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="quote"><em>Ayaka hears a voice out of nowhere. It sounds like a whisper. Or at least, multiple people whispering.</em> &quot;Ử̸s̸͗͐ẽ̸́l̶̈́̽é̴͘s̶̛̈́s̷̃̓.̵̊͘&quot;
+</div>&gt; 
+<div class="quote"><em>Monokuma then suddenly appears behind Ayaka.</em> &quot;Hey there!&quot;</div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20ayaka-sim%20%5B870008975096184922%5D.html_Files/5f0b9d64a477f8f4e3322d735ef13956-526D1.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ayaka Sato#0000" data-user-id="870381872759312455" style="">Ayaka Sato</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">29-Jul-21 03:21 PM</span>
+
+            <div class="chatlog__message " data-message-id="870385666146582558" id="message-870385666146582558" title="Message sent: 29-Jul-21 03:21 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Gh-&quot; Her heart clenched, the whispering prompting her to look around in a clearly anxious state. But, of course… there was no one around.
+No one other than Monokuma, anyway. 
+&quot;I… I refuse! Let me out.&quot; She stared at him with a fierce glare. Hmm, she thinks she has a choice…</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20ayaka-sim%20%5B870008975096184922%5D.html_Files/cb1a7444d1258f4a15c878bc34ca1178-CEA0F.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Monokuma#0000" data-user-id="870381872759312455" style="">Monokuma</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">29-Jul-21 04:05 PM</span>
+
+            <div class="chatlog__message " data-message-id="870396615591067718" id="message-870396615591067718" title="Message sent: 29-Jul-21 04:05 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;What do you mean refuse? The only way you&#39;ll be safe from this is if you&#39;ll kill. Puhuhuhu~! But it&#39;s obvious you&#39;re not going to do that... Soooo~&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20ayaka-sim%20%5B870008975096184922%5D.html_Files/1695350fa348813e1c2b1694b0971eb2-6D88A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="ImReallyScrewed#8206" data-user-id="578326021443420160" style="color: rgb(211,36,36)">Brilliance is fleeting.</span>
+
+
+        <span class="chatlog__timestamp">29-Jul-21 04:05 PM</span>
+
+            <div class="chatlog__message " data-message-id="870396684973248533" id="message-870396684973248533" title="Message sent: 29-Jul-21 04:05 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="quote"><em>The scene changed to show Ayaka&#39;s old childhood home. Oh yeah.</em></div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20ayaka-sim%20%5B870008975096184922%5D.html_Files/5f0b9d64a477f8f4e3322d735ef13956-526D1.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ayaka Sato#0000" data-user-id="870381872759312455" style="">Ayaka Sato</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">29-Jul-21 04:17 PM</span>
+
+            <div class="chatlog__message " data-message-id="870399671619711066" id="message-870399671619711066" title="Message sent: 29-Jul-21 04:17 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>Oh.</em> She froze up one second, and the next, she fell to her knees.
+The place she worked so hard to push to the back of her memories. The life she wanted to disconnect from…
+&quot;Just… fucking stop…&quot; This wasn&#39;t real. But why was it so hard to remind herself of that?
+She closed her eyes tight.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20ayaka-sim%20%5B870008975096184922%5D.html_Files/1695350fa348813e1c2b1694b0971eb2-6D88A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="ImReallyScrewed#8206" data-user-id="578326021443420160" style="color: rgb(211,36,36)">Brilliance is fleeting.</span>
+
+
+        <span class="chatlog__timestamp">29-Jul-21 04:34 PM</span>
+
+            <div class="chatlog__message " data-message-id="870403869686001674" id="message-870403869686001674" title="Message sent: 29-Jul-21 04:34 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="quote"><em>A voice can be heard from the room to Ayaka’s left.</em> “Ayaka…?” <em>Obviously, it’s Ayaka’s dad.</em></div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20ayaka-sim%20%5B870008975096184922%5D.html_Files/5f0b9d64a477f8f4e3322d735ef13956-526D1.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ayaka Sato#0000" data-user-id="870381872759312455" style="">Ayaka Sato</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">29-Jul-21 04:45 PM</span>
+
+            <div class="chatlog__message " data-message-id="870406640770363424" id="message-870406640770363424" title="Message sent: 29-Jul-21 04:45 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">That… was a voice she hadn&#39;t heard in a long time; and certainly not a welcome one at that.
+Her heart drops, and she gasps, backing away until her back hit a wall. 
+&quot;Stay away. I can&#39;t- I-I hate you…&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20ayaka-sim%20%5B870008975096184922%5D.html_Files/1695350fa348813e1c2b1694b0971eb2-6D88A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="ImReallyScrewed#8206" data-user-id="578326021443420160" style="color: rgb(211,36,36)">Brilliance is fleeting.</span>
+
+
+        <span class="chatlog__timestamp">29-Jul-21 09:53 PM</span>
+
+            <div class="chatlog__message " data-message-id="870484246433759232" id="message-870484246433759232" title="Message sent: 29-Jul-21 09:53 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="quote">&quot;Hey. Come here, Ayaka.&quot;
+</div>&gt; 
+<div class="quote"><em>In the corner of your eye, you can make out a small figure. It seems to be Ayaka&#39;s mom, with... an unhealthy <span class="spoiler-text spoiler-text--hidden" onclick="showSpoiler(event, this)">amount of alcohol</span> next to her. Suffice to say, this was not a good environment to be in.</em></div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20ayaka-sim%20%5B870008975096184922%5D.html_Files/5f0b9d64a477f8f4e3322d735ef13956-526D1.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ayaka Sato#0000" data-user-id="870381872759312455" style="">Ayaka Sato</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">29-Jul-21 11:17 PM</span>
+
+            <div class="chatlog__message " data-message-id="870505468815093810" id="message-870505468815093810" title="Message sent: 29-Jul-21 11:17 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">She saw her mother, and immediately, the tears flowed.
+<em>Why? When I was starting to forget- starting to become my normal self… that could keep everything in…</em>
+&quot;No! Get away. B-both of you, I…!&quot;
+Her hands ran over her pockets, clumsily and frantically searching for something. She pulled out her knife, but… she couldn&#39;t bring herself to move.
+She was scared.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20ayaka-sim%20%5B870008975096184922%5D.html_Files/1695350fa348813e1c2b1694b0971eb2-6D88A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="ImReallyScrewed#8206" data-user-id="578326021443420160" style="color: rgb(211,36,36)">Brilliance is fleeting.</span>
+
+
+        <span class="chatlog__timestamp">30-Jul-21 12:31 PM</span>
+
+            <div class="chatlog__message " data-message-id="870705141689507840" id="message-870705141689507840" title="Message sent: 30-Jul-21 12:31 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="quote"><em>Ayaka’s father started walking closer to her, balling up his fists.</em> “Why can’t you ever… just follow directions…?”
+</div>
+<div class="quote"><em>The mother seemed to not care much.</em></div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20ayaka-sim%20%5B870008975096184922%5D.html_Files/5f0b9d64a477f8f4e3322d735ef13956-526D1.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ayaka Sato#0000" data-user-id="870381872759312455" style="">Ayaka Sato</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Jul-21 12:51 PM</span>
+
+            <div class="chatlog__message " data-message-id="870710134266003478" id="message-870710134266003478" title="Message sent: 30-Jul-21 12:51 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Rather than attempt to defend herself, it seemed she just… braced herself for whatever might be coming. Instinct?
+
+&quot;L-leave… go away… I never wanted you back…&quot; She whimpered.
+
+The soft girl behind that tough front seemed to be revealing herself more and more as time passed.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20ayaka-sim%20%5B870008975096184922%5D.html_Files/1695350fa348813e1c2b1694b0971eb2-6D88A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="ImReallyScrewed#8206" data-user-id="578326021443420160" style="color: rgb(211,36,36)">Brilliance is fleeting.</span>
+
+
+        <span class="chatlog__timestamp">30-Jul-21 01:10 PM</span>
+
+            <div class="chatlog__message " data-message-id="870715040314052608" id="message-870715040314052608" title="Message sent: 30-Jul-21 01:10 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="quote"><em>As the father walked closer and closer, the house broke down around them. The scene was torn apart piece by piece until only Ayaka and her father was left. <span class="spoiler-text spoiler-text--hidden" onclick="showSpoiler(event, this)">The father raised his hand, preparing to hit Ayaka, when...</span></em>
+</div>&gt; 
+<div class="quote"><em>Ayaka&#39;s father collapsed into the ground and disappeared. Think Thanos snapped. Ayaka was now alone in the dark room.</em></div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20ayaka-sim%20%5B870008975096184922%5D.html_Files/5f0b9d64a477f8f4e3322d735ef13956-526D1.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ayaka Sato#0000" data-user-id="870381872759312455" style="">Ayaka Sato</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Jul-21 01:22 PM</span>
+
+            <div class="chatlog__message " data-message-id="870717893141233664" id="message-870717893141233664" title="Message sent: 30-Jul-21 01:22 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Shaking intensely, she dropped the knife. Having to experience that again was the last thing she&#39;d ever wanted. How could things get any worse?
+And though her father disappeared, she did not feel any relief. The darkness certainly didn&#39;t help, and she curled up into a ball, face buried in her knees.
+
+&quot;Getmeoutgetmeoutgetmeoutgetmeout…&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20ayaka-sim%20%5B870008975096184922%5D.html_Files/cb1a7444d1258f4a15c878bc34ca1178-CEA0F.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Monokuma#0000" data-user-id="870381872759312455" style="">Monokuma</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Jul-21 02:01 PM</span>
+
+            <div class="chatlog__message " data-message-id="870727894949851186" id="message-870727894949851186" title="Message sent: 30-Jul-21 02:01 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Poor Ayaka... so empty. You had like, no friends, right? Puhuhuhu~! And you still have no friends!&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20ayaka-sim%20%5B870008975096184922%5D.html_Files/5f0b9d64a477f8f4e3322d735ef13956-526D1.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ayaka Sato#0000" data-user-id="870381872759312455" style="">Ayaka Sato</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Jul-21 02:06 PM</span>
+
+            <div class="chatlog__message " data-message-id="870729005383430224" id="message-870729005383430224" title="Message sent: 30-Jul-21 02:06 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;S-shut up… shut up! I don&#39;t need friends… I-I don&#39;t need… anyone…&quot;
+Was that <em>really</em> true?</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20ayaka-sim%20%5B870008975096184922%5D.html_Files/cb1a7444d1258f4a15c878bc34ca1178-CEA0F.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Monokuma#0000" data-user-id="870381872759312455" style="">Monokuma</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Jul-21 02:28 PM</span>
+
+            <div class="chatlog__message " data-message-id="870734498239766528" id="message-870734498239766528" title="Message sent: 30-Jul-21 02:28 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;At the end of the day...&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20ayaka-sim%20%5B870008975096184922%5D.html_Files/1695350fa348813e1c2b1694b0971eb2-6D88A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="ImReallyScrewed#8206" data-user-id="578326021443420160" style="color: rgb(211,36,36)">Brilliance is fleeting.</span>
+
+
+        <span class="chatlog__timestamp">30-Jul-21 02:28 PM</span>
+
+            <div class="chatlog__message " data-message-id="870734543563399169" id="message-870734543563399169" title="Message sent: 30-Jul-21 02:28 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="quote"><em>The scene shifted to show Ayaka&#39;s bakery, but in a much darker tone.</em></div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20ayaka-sim%20%5B870008975096184922%5D.html_Files/cb1a7444d1258f4a15c878bc34ca1178-CEA0F.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Monokuma#0000" data-user-id="870381872759312455" style="">Monokuma</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Jul-21 02:28 PM</span>
+
+            <div class="chatlog__message " data-message-id="870734569148665877" id="message-870734569148665877" title="Message sent: 30-Jul-21 02:28 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;You&#39;re still worthless!&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20ayaka-sim%20%5B870008975096184922%5D.html_Files/5f0b9d64a477f8f4e3322d735ef13956-526D1.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ayaka Sato#0000" data-user-id="870381872759312455" style="">Ayaka Sato</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Jul-21 02:37 PM</span>
+
+            <div class="chatlog__message " data-message-id="870736885880856616" id="message-870736885880856616" title="Message sent: 30-Jul-21 02:37 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><em>&quot;…That&#39;s not true!&quot;</em>
+She finally looked up and slammed her fists hard onto the ground. <em>That</em> was going to bruise.
+&quot;I-I carried this place! I…I worked so hard, so… why does it look like this…?&quot; Her anger turned into sadness in a flicker.
+
+<em>You&#39;re never going to see it again. Face it.</em></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20ayaka-sim%20%5B870008975096184922%5D.html_Files/cb1a7444d1258f4a15c878bc34ca1178-CEA0F.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Monokuma#0000" data-user-id="870381872759312455" style="">Monokuma</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Jul-21 02:40 PM</span>
+
+            <div class="chatlog__message " data-message-id="870737567870517299" id="message-870737567870517299" title="Message sent: 30-Jul-21 02:40 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;You know, if you really care about this place, why don&#39;t you want to go back there? After all, it&#39;s been a month! Don&#39;t you think that it might&#39;ve gotten destroyed by now? Puhuhuhu~! The refusal to kill... it&#39;s ultimately just your downfall.&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20ayaka-sim%20%5B870008975096184922%5D.html_Files/5f0b9d64a477f8f4e3322d735ef13956-526D1.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ayaka Sato#0000" data-user-id="870381872759312455" style="">Ayaka Sato</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Jul-21 02:47 PM</span>
+
+            <div class="chatlog__message " data-message-id="870739453809946704" id="message-870739453809946704" title="Message sent: 30-Jul-21 02:47 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;Destroyed…? T-that&#39;s… ridiculous… All of our fame…&quot; Her tears spilled onto the floor.
+&quot;…It&#39;s all my fault. I&#39;m not strong enough…&quot;
+
+<em>Are you accepting your true self?</em></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20ayaka-sim%20%5B870008975096184922%5D.html_Files/cb1a7444d1258f4a15c878bc34ca1178-CEA0F.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Monokuma#0000" data-user-id="870381872759312455" style="">Monokuma</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Jul-21 02:51 PM</span>
+
+            <div class="chatlog__message " data-message-id="870740387659120690" id="message-870740387659120690" title="Message sent: 30-Jul-21 02:51 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;You did it to yourself! Puhuhu~!&quot; <em>Around Ayaka, the bakery collapsed and crumbled, leaving nothing but ruins.</em></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20ayaka-sim%20%5B870008975096184922%5D.html_Files/5f0b9d64a477f8f4e3322d735ef13956-526D1.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ayaka Sato#0000" data-user-id="870381872759312455" style="">Ayaka Sato</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Jul-21 02:57 PM</span>
+
+            <div class="chatlog__message " data-message-id="870742001421778954" id="message-870742001421778954" title="Message sent: 30-Jul-21 02:57 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">Her eyes going wide, she continued to shake.
+
+<em>Maybe… Monokuma is right?</em>
+
+&quot;This is because… I-I couldn&#39;t just do it. T-there&#39;s only one way out, b-but… how could I live with myself…?&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20ayaka-sim%20%5B870008975096184922%5D.html_Files/cb1a7444d1258f4a15c878bc34ca1178-CEA0F.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Monokuma#0000" data-user-id="870381872759312455" style="">Monokuma</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Jul-21 03:23 PM</span>
+
+            <div class="chatlog__message " data-message-id="870748523845550080" id="message-870748523845550080" title="Message sent: 30-Jul-21 03:23 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;It&#39;s all up to you...!&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20ayaka-sim%20%5B870008975096184922%5D.html_Files/1695350fa348813e1c2b1694b0971eb2-6D88A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="ImReallyScrewed#8206" data-user-id="578326021443420160" style="color: rgb(211,36,36)">Brilliance is fleeting.</span>
+
+
+        <span class="chatlog__timestamp">30-Jul-21 03:26 PM</span>
+
+            <div class="chatlog__message " data-message-id="870749192405004378" id="message-870749192405004378" title="Message sent: 30-Jul-21 03:26 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="quote"><em>In the ruins, you can see a silohuette. It&#39;s the bakery owner.</em></div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20ayaka-sim%20%5B870008975096184922%5D.html_Files/5f0b9d64a477f8f4e3322d735ef13956-526D1.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ayaka Sato#0000" data-user-id="870381872759312455" style="">Ayaka Sato</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Jul-21 03:33 PM</span>
+
+            <div class="chatlog__message " data-message-id="870751098498072586" id="message-870751098498072586" title="Message sent: 30-Jul-21 03:33 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;A-ah… no…&quot;
+She shrinks, as if scared of something. Why? Why him?
+&quot;I…I failed you… I…&quot;
+She couldn&#39;t even get out an apology.</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20ayaka-sim%20%5B870008975096184922%5D.html_Files/1695350fa348813e1c2b1694b0971eb2-6D88A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="ImReallyScrewed#8206" data-user-id="578326021443420160" style="color: rgb(211,36,36)">Brilliance is fleeting.</span>
+
+
+        <span class="chatlog__timestamp">30-Jul-21 03:40 PM</span>
+
+            <div class="chatlog__message " data-message-id="870752624037740596" id="message-870752624037740596" title="Message sent: 30-Jul-21 03:40 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="quote">&quot;Ayaka?&quot; <em>The owner is walking at Ayaka, but much like her father, the owner just... crumbles.</em></div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20ayaka-sim%20%5B870008975096184922%5D.html_Files/5f0b9d64a477f8f4e3322d735ef13956-526D1.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ayaka Sato#0000" data-user-id="870381872759312455" style="">Ayaka Sato</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Jul-21 03:43 PM</span>
+
+            <div class="chatlog__message " data-message-id="870753580850749560" id="message-870753580850749560" title="Message sent: 30-Jul-21 03:43 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;…&quot; Her sanity was slipping from her grasp.
+<em>You truly have no one. No one no one no one no one-</em>
+&quot;I&#39;m sorry…&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20ayaka-sim%20%5B870008975096184922%5D.html_Files/1695350fa348813e1c2b1694b0971eb2-6D88A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="ImReallyScrewed#8206" data-user-id="578326021443420160" style="color: rgb(211,36,36)">Brilliance is fleeting.</span>
+
+
+        <span class="chatlog__timestamp">30-Jul-21 03:56 PM</span>
+
+            <div class="chatlog__message " data-message-id="870756708895563806" id="message-870756708895563806" title="Message sent: 30-Jul-21 03:56 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="quote"><em>Ayaka&#39;s mother appears behind her. She puts a hand on Ayaka&#39;s shoulder.</em></div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20ayaka-sim%20%5B870008975096184922%5D.html_Files/5f0b9d64a477f8f4e3322d735ef13956-526D1.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ayaka Sato#0000" data-user-id="870381872759312455" style="">Ayaka Sato</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Jul-21 04:01 PM</span>
+
+            <div class="chatlog__message " data-message-id="870757981602586634" id="message-870757981602586634" title="Message sent: 30-Jul-21 04:01 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">She&#39;s now crying so much that it&#39;s almost hard for her to breathe. One could <em>barely</em> make out what she was saying.
+&quot;Y-you… you&#39;re going to d-disappear too… but… y-you never loved me! No one does…&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20ayaka-sim%20%5B870008975096184922%5D.html_Files/1695350fa348813e1c2b1694b0971eb2-6D88A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="ImReallyScrewed#8206" data-user-id="578326021443420160" style="color: rgb(211,36,36)">Brilliance is fleeting.</span>
+
+
+        <span class="chatlog__timestamp">30-Jul-21 09:52 PM</span>
+
+            <div class="chatlog__message " data-message-id="870846353805279293" id="message-870846353805279293" title="Message sent: 30-Jul-21 09:52 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace"><div class="quote">&quot;You&#39;re just... so... useless...&quot; <em>Ayaka&#39;s mother crumbles before her as well.</em></div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20ayaka-sim%20%5B870008975096184922%5D.html_Files/5f0b9d64a477f8f4e3322d735ef13956-526D1.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Ayaka Sato#0000" data-user-id="870381872759312455" style="">Ayaka Sato</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Jul-21 10:02 PM</span>
+
+            <div class="chatlog__message " data-message-id="870848757892251688" id="message-870848757892251688" title="Message sent: 30-Jul-21 10:02 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">&quot;…U…useless…&quot;
+She sounds almost convinced of it.
+&quot;…I-I couldn&#39;t do it. I couldn&#39;t… just kill… why…? What&#39;s wrong with me…?&quot;</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20ayaka-sim%20%5B870008975096184922%5D.html_Files/1695350fa348813e1c2b1694b0971eb2-6D88A.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="ImReallyScrewed#8206" data-user-id="578326021443420160" style="color: rgb(211,36,36)">Brilliance is fleeting.</span>
+
+
+        <span class="chatlog__timestamp">30-Jul-21 10:10 PM</span>
+
+            <div class="chatlog__message " data-message-id="870850937160368188" id="message-870850937160368188" title="Message sent: 30-Jul-21 10:10 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(hey as long as i can get crying, insane, or pissed off from this motive im happy
+
+<div class="quote"><em>The room fades to white as Ayaka is crying.</em>
+</div>&gt; 
+<div class="quote"><em>Ayaka wakes up in the <span class="mention">#first-aid</span>. Have fun. :]</em></div></span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20ayaka-sim%20%5B870008975096184922%5D.html_Files/640cd2526a889f3a1ecaadae62311a58-03328.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="Despair&#39;s Horizon Bot#8265" data-user-id="861082089231482880" style="color: rgb(255,0,0)">Despair&#39;s Horizon Bot</span>
+
+            <span class="chatlog__bot-tag">BOT</span>
+
+        <span class="chatlog__timestamp">30-Jul-21 10:10 PM</span>
+
+            <div class="chatlog__message " data-message-id="870850959104966736" id="message-870850959104966736" title="Message sent: 30-Jul-21 10:10 PM">
+
+
+                        <div class="chatlog__embed">
+                                <div class="chatlog__embed-color-pill" style="background-color: rgba(217,44,67,255)"></div>
+
+                            <div class="chatlog__embed-content-container">
+                                <div class="chatlog__embed-content">
+                                    <div class="chatlog__embed-text">
+
+
+                                            <div class="chatlog__embed-description">
+                                                <div class="markdown preserve-whitespace"><span class="mention" title="shiny#6669">@gabby | Ayaka Sato &#129360;</span> got an interaction!</div>
+                                            </div>
+
+                                    </div>
+
+                                </div>
+
+
+                            </div>
+                        </div>
+
+            </div>
+    </div>
+</div>
+
+
+
+<div class="chatlog__message-group">
+
+    <div class="chatlog__author-avatar-container">
+        <img class="chatlog__author-avatar" src="Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20ayaka-sim%20%5B870008975096184922%5D.html_Files/003184a4bfaf95040d8134d1368eece7-EAAC7.png" alt="Avatar" loading="lazy">
+    </div>
+
+    <div class="chatlog__messages">
+        <span class="chatlog__author-name" title="shiny#6669" data-user-id="284589540553916416" style="color: rgb(255,215,0)">gabby | Ayaka Sato &#129360;</span>
+
+
+        <span class="chatlog__timestamp">30-Jul-21 10:11 PM</span>
+
+            <div class="chatlog__message " data-message-id="870851234859458581" id="message-870851234859458581" title="Message sent: 30-Jul-21 10:11 PM">
+                    <div class="chatlog__content">
+                        <div class="markdown">
+                            <span class="preserve-whitespace">(: )</span>
+
+                        </div>
+                    </div>
+
+
+
+            </div>
+    </div>
+</div>
+
+
+</div>
+
+<div class="postamble">
+    <div class="postamble__entry">Exported 39 message(s)</div>
+</div>
+
+</body>
+
+</html>
