@@ -9,4 +9,4 @@ All Locations:
 * [Frozen Lake](https://astrea49.github.io/DH-Season-8-Archive/mountain/Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85-%E2%9C%A7%E2%9D%85Mountain%20%28KG%29%E2%9D%85%E2%9C%A7-%E2%9D%85%E2%80%A2%20-%20frozen-lake%20%5B846765960697479178%5D.html)
 * [Beacon Of Hope](https://astrea49.github.io/DH-Season-8-Archive/mountain/Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85-%E2%9C%A7%E2%9D%85Mountain%20%28KG%29%E2%9D%85%E2%9C%A7-%E2%9D%85%E2%80%A2%20-%20beacon-of-hope%20%5B873041050564960277%5D.html)
 
-[Back to Home](https://astrea49.github.io/DH-Season-8-Archive/home)
+[Back to Home](https://astrea49.github.io/DH-Season-8-Archive/)

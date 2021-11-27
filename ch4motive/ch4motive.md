@@ -11,4 +11,4 @@ All Simulations:
 * [Aikawa Sim](https://astrea49.github.io/DH-Season-8-Archive/ch4motive/Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20aikawa-sim%20%5B870715185013334027%5D.html)
 * [Auko Sim](https://astrea49.github.io/DH-Season-8-Archive/ch4motive/Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2-%E2%9C%A7%E2%9D%85Chapter%204%20Motive%E2%9D%85%E2%9C%A7-%E2%80%A2%20-%20auko-sim%20%5B870009036282675241%5D.html)
 
-[Back to Home](https://astrea49.github.io/DH-Season-8-Archive/home)
+[Back to Home](https://astrea49.github.io/DH-Season-8-Archive/)

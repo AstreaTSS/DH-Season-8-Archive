@@ -9,4 +9,4 @@ All Locations:
 * [D1](https://astrea49.github.io/DH-Season-8-Archive/event/Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Event%201%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20d1%20%5B866412463402123264%5D.html)
 * [The End Of Time](https://astrea49.github.io/DH-Season-8-Archive/event/Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Event%201%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20the-end-of-time%20%5B866144934225903626%5D.html)
 
-[Back to Home](https://astrea49.github.io/DH-Season-8-Archive/home)
+[Back to Home](https://astrea49.github.io/DH-Season-8-Archive/)

@@ -11,4 +11,4 @@ All Locations:
 * [First Aid](https://astrea49.github.io/DH-Season-8-Archive/resort/Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Resort%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20first-aid%20%5B852554102805233684%5D.html)
 * [Main Lobby](https://astrea49.github.io/DH-Season-8-Archive/resort/Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Resort%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20main-lobby%20%5B844922351086862377%5D.html)
 
-[Back to Home](https://astrea49.github.io/DH-Season-8-Archive/home)
+[Back to Home](https://astrea49.github.io/DH-Season-8-Archive/)

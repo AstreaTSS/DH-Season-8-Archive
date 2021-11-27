@@ -28,4 +28,4 @@ All Locations:
 * [Pathway](https://astrea49.github.io/DH-Season-8-Archive/dorms/Danganronpa_%20Despair%27s%20Horizon%20-%20%E2%80%A2%E2%9D%85%E2%94%80%E2%9C%A7%E2%9D%85Dorms%20%28KG%29%E2%9D%85%E2%9C%A7%E2%94%80%E2%9D%85%E2%80%A2%20-%20pathway%20%5B847553625462800404%5D.html)
 
 
-[Back to Home](https://astrea49.github.io/DH-Season-8-Archive/home)
+[Back to Home](https://astrea49.github.io/DH-Season-8-Archive/)
